@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Membre - OpenDev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles for member detail page */
+        .member-detail {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 8rem auto 2rem;
+        }
+
+        .member-header {
+            display: flex;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            flex-wrap: wrap;
+        }
+
+        .member-header img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-right: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .member-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .member-info h1 {
+            color: var(--primary-color);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .role {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .contact-info {
+            margin: 1.5rem 0;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info i {
+            width: 24px;
+            color: var(--primary-color);
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .member-bio {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .member-bio h2, 
+        .member-skills h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            display: inline-block;
+        }
+
+        .member-skills {
+            padding: 2rem;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            padding: 0 2rem 2rem 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .error-message h2 {
+            color: #d32f2f;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .member-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .member-header img {
+                margin-right: 0;
+                margin-bottom: 1.5rem;
+            }
+
+            .contact-info {
+                text-align: left;
+            }
+
+            .action-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating background elements -->
+    <div class="floating-element floating-1">👤</div>
+    <div class="floating-element floating-2">💼</div>
+    <div class="floating-element floating-3">🚀</div>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">OpenDev</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="members.html">Membres</a></li>
+                <li><a href="#" class="active">Profil</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="#" class="sign-in">Sign in</a>
+                <a href="#" class="login-btn">Login</a>
+            </div>
+        </nav>
+        <div class="team-note">
+            <i class="fas fa-user-circle"></i> Détails du profil membre
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="member-detail">
+                <!-- Member details will be dynamically inserted here by JavaScript -->
+            </div>
+            
+            <div class="action-buttons">
+                <a href="members.html" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+                <a href="#" class="btn" id="editMemberBtn">
+                    <i class="fas fa-edit"></i> Modifier le profil
+                </a>
+                <a href="#" class="btn btn-outline" id="deleteMemberBtn" style="color: #d32f2f; border-color: #d32f2f;">
+                    <i class="fas fa-trash"></i> Supprimer le membre
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><i class="fas fa-copyright"></i> 2025 - OpenDev Mada. Tous droits réservés.</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membres - OpenDev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .logo::before {
+            content: "⚡";
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3498db;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .sign-in {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .sign-in:hover {
+            color: #3498db;
+        }
+
+        .login-btn {
+            background: #2c3e50;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+        }
+
+        .login-btn:hover {
+            background: #34495e;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.4);
+        }
+
+        /* Team note */
+        .team-note {
+            padding: 0.5rem 2rem;
+            background: rgba(52, 152, 219, 0.1);
+            color: #2980b9;
+            font-size: 0.9rem;
+            border-left: 3px solid #3498db;
+        }
+
+        /* Main content */
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 8rem auto 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-top: 2rem;
+        }
+        /* Members page specific styles */
+        .members-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .members-header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin: 0;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        .search-container {
+            margin: 1.5rem 0;
+            width: 100%;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 600px;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #e0e6ed;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 0.6rem 1rem;
+            border: 2px solid #e0e6ed;
+            border-radius: 25px;
+            background-color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e0e6ed;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #e0e6ed;
+        }
+
+        .member-info {
+            padding: 1.5rem;
+        }
+
+        .member-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+
+        .member-info .role {
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .member-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background: #f1f5f9;
+            color: #2c3e50;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .members-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-bar, .filters {
+                width: 100%;
+            }
+
+            .filter-select {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">OpenDev</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="#" class="active">Membres</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="#" class="sign-in">Sign in</a>
+                <a href="#" class="login-btn">Login</a>
+            </div>
+        </nav>
+        <div class="team-note">
+            <i class="fas fa-users"></i> Découvrez notre communauté de développeurs
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="members-header">
+                <h1>Nos Membres</h1>
+                <a href="add-member.html" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Ajouter un membre
+                </a>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Rechercher un membre par nom, compétence ou localisation..." id="searchInput">
+            </div>
+            
+            <div class="filters">
+                <select class="filter-select" id="roleFilter">
+                    <option value="">Tous les rôles</option>
+                    <option value="Développeur">Développeur</option>
+                    <option value="Designer">Designer</option>
+                    <option value="Gestionnaire">Gestionnaire</option>
+                    <option value="Data Scientist">Data Scientist</option>
+                    <option value="DevOps">DevOps</option>
+                </select>
+                
+                <select class="filter-select" id="skillFilter">
+                    <option value="">Toutes les compétences</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="React">React</option>
+                    <option value="Node.js">Node.js</option>
+                    <option value="Python">Python</option>
+                    <option value="UI/UX">UI/UX</option>
+                    <option value="Mobile">Mobile</option>
+                </select>
+
+                <select class="filter-select" id="locationFilter">
+                    <option value="">Toutes les localisations</option>
+                    <option value="Antananarivo">Antananarivo</option>
+                    <option value="Antsirabe">Antsirabe</option>
+                    <option value="Fianarantsoa">Fianarantsoa</option>
+                    <option value="Mahajanga">Mahajanga</option>
+                    <option value="Toamasina">Toamasina</option>
+                    <option value="Toliara">Toliara</option>
+                </select>
+            </div>
+            
+            <div class="members-grid" id="member-list">
+                <!-- Sample member card (will be dynamically generated) -->
+                <div class="member-card fade-in">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Membre">
+                    <div class="member-info">
+                        <h3>Jean Dupont</h3>
+                        <p class="role">Développeur Full Stack</p>
+                        <div class="member-skills">
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="member-card fade-in">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Membre">
+                    <div class="member-info">
+                        <h3>Marie Rabe</h3>
+                        <p class="role">UX/UI Designer</p>
+                        <div class="member-skills">
+                            <span class="skill-tag">Figma</span>
+                            <span class="skill-tag">UI Design</span>
+                            <span class="skill-tag">Prototypage</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="member-card fade-in">
+                    <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Membre">
+                    <div class="member-info">
+                        <h3>Andry Rakoto</h3>
+                        <p class="role">Développeur Mobile</p>
+                        <div class="member-skills">
+                            <span class="skill-tag">React Native</span>
+                            <span class="skill-tag">iOS</span>
+                            <span class="skill-tag">Android</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><i class="fas fa-copyright"></i> 2025 - OpenDev Mada. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling and fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for fade-in animation
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const memberCards = document.querySelectorAll('.member-card');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            memberCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+
+        // Filter functionality
+        const roleFilter = document.getElementById('roleFilter');
+        const skillFilter = document.getElementById('skillFilter');
+        const locationFilter = document.getElementById('locationFilter');
+
+        function applyFilters() {
+            const role = roleFilter.value.toLowerCase();
+            const skill = skillFilter.value.toLowerCase();
+            const location = locationFilter ? locationFilter.value.toLowerCase() : '';
+            
+            memberCards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                const matchesRole = !role || cardText.includes(role);
+                const matchesSkill = !skill || cardText.includes(skill);
+                const matchesLocation = !location || cardText.includes(location);
+                
+                if (matchesRole && matchesSkill && matchesLocation) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        roleFilter.addEventListener('change', applyFilters);
+        skillFilter.addEventListener('change', applyFilters);
+        if (locationFilter) {
+            locationFilter.addEventListener('change', applyFilters);
+        }
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

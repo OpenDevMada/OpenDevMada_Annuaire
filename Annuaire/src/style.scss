@@ -4,18 +4,33 @@
   text-decoration: none;
 }
 
-header {
+body {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+button {
+  display: flex;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 15px;
+}
+
+header {
+  // position: fixed;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
   border-bottom: 1px solid #f0f0f0;
+  box-sizing: border-box;
+  top: 0;
+  width: 100%;
   button {
-    border: none;
-    cursor: pointer;
-    padding: 15px;
-    font-size: 25px;
-    border-radius: 20px;
     text-transform: capitalize;
   }
   span {
@@ -25,24 +40,25 @@ header {
     font-optical-sizing: auto;
     font-weight: 700;
     font-style: normal;
-    font-size: 42px;
+    font-size: 38px;
     gap: 15px;
   }
   div {
     display: flex;
+    width: auto;
     gap: 20px;
   }
 }
 header {
   nav {
     display: flex;
-    gap: 24px;
+    gap: 20px;
     border-radius: 50px;
     background-color: #f0f0f0;
     a {
       font-family: "inter";
       font-weight: 600;
-      font-size: 25px;
+      font-size: 20px;
       color: #000;
       text-transform: capitalize;
       margin: 20px 30px;
@@ -50,11 +66,118 @@ header {
   }
 }
 header>div {
+  img {
+    object-fit: cover;
+  }
   button:first-child {
     background-color: transparent;
   }
   button:last-child {
     background-color: #000;
     color: white;
+
   }
+}
+
+main {
+  margin: 0 40px;
+}
+h1 {
+  font-family: "Poppins";
+  font-weight: 900;
+  color: #113C6D;
+  font-size: 88px;
+}
+main .hero {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 40px 0;
+  p {
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 500;
+  }
+  figure {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    height: 100%;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border-radius: 15px;
+    background-color: rgb(241, 241, 241);
+  }
+}
+main .hero>div:first-child  {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+  >div {
+    display: flex;
+    gap: 40px;
+  }
+  button {
+    gap: 10px;
+    color: white;
+    background-color: #113C6D;
+    padding: 15px 10px;
+    border-radius: 10px;
+
+  }
+}
+main .hero figure {
+  img {
+    width: 80%;
+    height: 70%;
+    background-color: rgb(241, 241, 241);
+  }
+}
+
+footer {
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid;
+  gap: 15px;
+  width: 50%;
+  p {
+    text-transform: capitalize;
+  }
+  img {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 768px) {
+  main .hero {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  main .hero>div:first-child {
+    align-items: center;
+    text-align: center;
+  }
+  main .hero figure {
+    justify-content: center;
+  }
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+  header>div {
+    flex-direction: column;
+    align-items: center;
+  }
+  
 }

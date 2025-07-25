@@ -20,7 +20,7 @@ button {
 }
 
 header {
-  // position: fixed;
+  position: fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -30,6 +30,7 @@ header {
   box-sizing: border-box;
   top: 0;
   width: 100%;
+  background-color: white;
   button {
     text-transform: capitalize;
   }
@@ -93,8 +94,8 @@ main .hero {
   grid-template-columns: repeat(2,1fr);
   align-items: center;
   justify-content: space-between;
-  height: 100vh;
   padding: 40px 0;
+  margin-top: 80px;
   p {
     font-family: 'Poppins';
     font-size: 20px;
@@ -156,28 +157,9 @@ footer {
   img {
     width: 45px;
     height: 45px;
+    object-fit: contain;
   }
 }
 
 @media (max-width: 768px) {
-  main .hero {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-  main .hero>div:first-child {
-    align-items: center;
-    text-align: center;
-  }
-  main .hero figure {
-    justify-content: center;
-  }
-  header {
-    flex-direction: column;
-    align-items: center;
-  }
-  header>div {
-    flex-direction: column;
-    align-items: center;
-  }
-  
 }

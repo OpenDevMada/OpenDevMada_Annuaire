@@ -20,8 +20,8 @@ pipeline {
                 // Setup Node.js environment
                 nodejs(nodeJSInstallationName: 'NodeJS') {
                     // Verify Node.js and npm versions
-                    sh 'node --version'
-                    sh 'npm --version'
+                    bat 'node --version'
+                    bat 'npm --version'
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
                     // Install project dependencies if you have a package.json
                     script {
                         if (fileExists('package.json')) {
-                            sh 'npm install'
+                            bat 'npm install'
                         }
                     }
                 }
@@ -45,7 +45,7 @@ pipeline {
                     // Add linting if you have ESLint or similar
                     script {
                         if (fileExists('node_modules/.bin/eslint')) {
-                            sh 'npx eslint assets/js/'
+                            bat 'npx eslint assets/js/'
                         }
                     }
                 }
@@ -59,7 +59,7 @@ pipeline {
                     script {
                         if (fileExists('package.json') && 
                             fileExists('node_modules/.bin/jest')) {
-                            sh 'npm test'
+                            bat 'npm test'
                         }
                     }
                 }
@@ -73,7 +73,7 @@ pipeline {
                     script {
                         if (fileExists('package.json') && 
                             fileExists('node_modules/.bin/webpack')) {
-                            sh 'npm run build'
+                            bat 'npm run build'
                         }
                     }
                 }
@@ -86,7 +86,7 @@ pipeline {
                 // Example: Deploy to a web server or S3 bucket
                 echo 'Deployment steps would go here'
                 // Example:
-                // sh 'aws s3 sync front/ s3://your-s3-bucket/ --delete'
+                // bat 'aws s3 sync front/ s3://your-s3-bucket/ --delete'
             }
         }
     }

@@ -1,47 +1,81 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membres - OpenDev</title>
+    <title>Membres - OpenDev Mada</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- shadcn/ui CSS -->
+    <link href="assets/css/shadcn.css" rel="stylesheet">
+    <!-- Custom Theme -->
+    <link href="assets/css/theme.css" rel="stylesheet">
+    <!-- Theme Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: ['class'],
+            theme: {
+                container: {
+                    center: true,
+                    padding: '2rem',
+                    screens: {
+                        '2xl': '1400px',
+                    },
+                },
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: 'hsl(222.2, 47.4%, 11.2%)',
+                            foreground: 'hsl(210, 40%, 98%)',
+                        },
+                        accent: {
+                            DEFAULT: 'hsl(222.2, 47.4%, 11.2%)',
+                            foreground: 'hsl(210, 40%, 98%)',
+                        },
+                        muted: {
+                            DEFAULT: 'hsl(210, 40%, 96.1%)',
+                            foreground: 'hsl(215.4, 16.3%, 46.9%)',
+                        },
+                        card: {
+                            DEFAULT: 'hsl(0, 0%, 100%)',
+                            foreground: 'hsl(222.2, 47.4%, 11.2%)',
+                        },
+                    },
+                    borderRadius: {
+                        lg: '0.5rem',
+                        md: 'calc(0.5rem - 2px)',
+                        sm: 'calc(0.5rem - 4px)',
+                    },
+                },
+            },
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        header {
+        /* Navigation - Using shadcn/ui classes */
+        .nav-container {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            width: 100%;
-            z-index: 1000;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        nav {
+        .nav-content {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .logo {
@@ -49,49 +83,50 @@
             align-items: center;
             font-size: 1.5rem;
             font-weight: 700;
-            color: #2c3e50;
+            color: var(--primary);
             text-decoration: none;
+            transition: all 0.3s ease;
         }
 
-        .logo::before {
-            content: "⚡";
+        .logo:hover {
+            color: var(--primary-hover);
+        }
+
+        .logo-icon {
             margin-right: 0.5rem;
-            font-size: 1.2rem;
+            color: var(--primary);
             animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: var(--foreground);
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             position: relative;
+            padding: 0.5rem 0;
         }
 
         .nav-links a:hover {
-            color: #3498db;
-            transform: translateY(-2px);
+            color: var(--primary);
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background: #3498db;
+            background-color: var(--primary);
             transition: width 0.3s ease;
         }
 
@@ -99,61 +134,31 @@
             width: 100%;
         }
 
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .sign-in {
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .sign-in:hover {
-            color: #3498db;
-        }
-
-        .login-btn {
-            background: #2c3e50;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
-        }
-
-        .login-btn:hover {
-            background: #34495e;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.4);
-        }
-
         /* Team note */
         .team-note {
-            padding: 0.5rem 2rem;
-            background: rgba(52, 152, 219, 0.1);
-            color: #2980b9;
-            font-size: 0.9rem;
-            border-left: 3px solid #3498db;
+            padding: 1rem 2rem;
+            background: rgba(10, 0, 71, 0.05);
+            color: var(--primary);
+            font-size: 0.95rem;
+            border-left: 3px solid var(--primary);
+            margin: 0;
+            font-weight: 500;
         }
 
         /* Main content */
         main {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 8rem auto 2rem;
+            padding: 2rem 1rem;
+            max-width: 1400px;
+            margin: 6rem auto 2rem;
+            min-height: calc(100vh - 200px);
         }
 
         .container {
-            background: white;
-            border-radius: 12px;
+            background: var(--card);
+            border-radius: var(--radius);
             padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
             margin-top: 2rem;
         }
         /* Members page specific styles */
@@ -161,46 +166,47 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .members-header h1 {
             font-size: 2.5rem;
-            color: #2c3e50;
+            font-weight: 700;
             margin: 0;
-            background: linear-gradient(135deg, #2c3e50, #3498db);
+            background: linear-gradient(135deg, var(--primary), #4f46e5);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 1.2;
         }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: #3498db;
-            color: white;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-        }
-
-        .btn-primary:hover {
-            background: #2980b9;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .members-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+            
+            .members-header h1 {
+                font-size: 2rem;
+            }
+            
+            .filters {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .member-card {
+                width: 100%;
+            }
         }
 
         .search-container {
@@ -343,79 +349,149 @@
         }
     </style>
 </head>
-<body>
-    <header>
-        <nav>
-            <a href="index.html" class="logo">OpenDev</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="#" class="active">Membres</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-            <div class="auth-buttons">
-                <a href="#" class="sign-in">Sign in</a>
-                <a href="#" class="login-btn">Login</a>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-foreground">
+    <!-- Navigation -->
+    <div class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">⚡</span>
+                <span>OpenDev Mada</span>
+            </a>
+            
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md hover:bg-muted" aria-label="Toggle menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:block">
+                <ul class="nav-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="members.html" class="font-semibold text-primary">Membres</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="hidden md:flex items-center gap-4">
+                <a href="#" class="text-sm font-medium text-foreground hover:text-primary transition-colors">Se connecter</a>
+                <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                    S'inscrire
+                </a>
             </div>
-        </nav>
-        <div class="team-note">
-            <i class="fas fa-users"></i> Découvrez notre communauté de développeurs
         </div>
-    </header>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-background border-t border-border">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-muted">Accueil</a>
+                <a href="members.html" class="block px-3 py-2 rounded-md text-base font-medium bg-muted text-primary">Membres</a>
+                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-muted">Services</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-muted">Contact</a>
+                <div class="pt-4 border-t border-border mt-2">
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-muted">Se connecter</a>
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium bg-primary text-primary-foreground text-center mt-2">S'inscrire</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <main>
-        <div class="container">
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-card rounded-xl shadow-sm border border-border p-6">
             <div class="members-header">
-                <h1>Nos Membres</h1>
-                <a href="add-member.html" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Ajouter un membre
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold">Nos Développeurs</h1>
+                    <p class="text-muted-foreground mt-2">Découvrez notre communauté de développeurs talentueux à Madagascar</p>
+                </div>
+                <a href="add-member.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2 text-base">
+                    <i class="fas fa-plus mr-2"></i> Ajouter un membre
                 </a>
             </div>
             
-            <div class="search-container">
-                <input type="text" class="search-bar" placeholder="Rechercher un membre par nom, compétence ou localisation..." id="searchInput">
-            </div>
-            
-            <div class="filters">
-                <select class="filter-select" id="roleFilter">
-                    <option value="">Tous les rôles</option>
-                    <option value="Développeur">Développeur</option>
-                    <option value="Designer">Designer</option>
-                    <option value="Gestionnaire">Gestionnaire</option>
-                    <option value="Data Scientist">Data Scientist</option>
-                    <option value="DevOps">DevOps</option>
-                </select>
+            <!-- Search and Filters -->
+            <div class="bg-muted/50 rounded-lg p-4 mb-8">
+                <!-- Search Bar -->
+                <div class="relative max-w-2xl mb-6">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-muted-foreground"></i>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="block w-full pl-10 pr-3 py-2 border border-input bg-background rounded-md shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        placeholder="Rechercher un développeur..."
+                    >
+                </div>
                 
-                <select class="filter-select" id="skillFilter">
-                    <option value="">Toutes les compétences</option>
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="React">React</option>
-                    <option value="Node.js">Node.js</option>
-                    <option value="Python">Python</option>
-                    <option value="UI/UX">UI/UX</option>
-                    <option value="Mobile">Mobile</option>
-                </select>
-
-                <select class="filter-select" id="locationFilter">
-                    <option value="">Toutes les localisations</option>
-                    <option value="Antananarivo">Antananarivo</option>
-                    <option value="Antsirabe">Antsirabe</option>
-                    <option value="Fianarantsoa">Fianarantsoa</option>
-                    <option value="Mahajanga">Mahajanga</option>
-                    <option value="Toamasina">Toamasina</option>
-                    <option value="Toliara">Toliara</option>
-                </select>
+                <!-- Filters -->
+                <div class="filters flex flex-wrap gap-4">
+                    <div class="filter-group flex-1 min-w-[200px]">
+                        <label for="roleFilter" class="block text-sm font-medium text-foreground mb-1">Rôle</label>
+                        <select 
+                            id="roleFilter"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            <option value="">Tous les rôles</option>
+                            <option value="Frontend">Frontend</option>
+                            <option value="Backend">Backend</option>
+                            <option value="Fullstack">Fullstack</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="DevOps">DevOps</option>
+                            <option value="UI/UX">UI/UX</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group flex-1 min-w-[200px]">
+                        <label for="skillFilter" class="block text-sm font-medium text-foreground mb-1">Compétence</label>
+                        <select 
+                            id="skillFilter"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            <option value="">Toutes les compétences</option>
+                            <option value="React">React</option>
+                            <option value="Vue">Vue</option>
+                            <option value="Node.js">Node.js</option>
+                            <option value="Python">Python</option>
+                            <option value="Java">Java</option>
+                            <option value="PHP">PHP</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group flex-1 min-w-[200px]">
+                        <label for="locationFilter" class="block text-sm font-medium text-foreground mb-1">Localisation</label>
+                        <select 
+                            id="locationFilter"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            <option value="">Toutes les localisations</option>
+                            <option value="Antananarivo">Antananarivo</option>
+                            <option value="Antsirabe">Antsirabe</option>
+                            <option value="Fianarantsoa">Fianarantsoa</option>
+                            <option value="Mahajanga">Mahajanga</option>
+                            <option value="Toamasina">Toamasina</option>
+                            <option value="Toliara">Toliara</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             
-            <div class="members-grid" id="member-list">
-                <!-- Sample member card (will be dynamically generated) -->
-                <div class="member-card fade-in">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Membre">
-                    <div class="member-info">
-                        <h3>Jean Dupont</h3>
-                        <p class="role">Développeur Full Stack</p>
-                        <div class="member-skills">
-                            <span class="skill-tag">JavaScript</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="member-list">
+                <!-- Sample Member Card 1 -->
+                <div class="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div class="p-5">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="relative">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Jean Dupont" class="w-16 h-16 rounded-full border-2 border-primary/20 object-cover">
+                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Jean Dupont</h3>
+                                <p class="text-sm text-muted-foreground">Développeur Fullstack</p>
+                                <div class="flex items-center mt-1">
+                                    <i class="fas fa-map-marker-alt text-xs text-muted-foreground mr-1"></i>
+                                    <span class="text-xs text-muted-foreground">Antananarivo</span>
+                                </div>
+                            </div>
                             <span class="skill-tag">React</span>
                             <span class="skill-tag">Node.js</span>
                         </div>

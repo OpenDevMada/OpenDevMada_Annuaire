@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  /* #FFFFFF */
+  --foreground: 245 100% 14%;
+  /* #0A0047 */
+  --primary: 245 100% 14%;
+  /* #0A0047 */
+  --primary-foreground: 0 0% 100%;
+  /* #FFFFFF */
+  --border: 245 50% 90%;
+  --input: 245 50% 90%;
+  --ring: 245 100% 14%;
+  /* #0A0047 */
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 245 100% 14%;
+  /* #0A0047 */
+  --foreground: 0 0% 100%;
+  /* #FFFFFF */
+  --primary: 0 0% 100%;
+  /* #FFFFFF */
+  --primary-foreground: 245 100% 14%;
+  /* #0A0047 */
+  --border: 245 50% 20%;
+  --input: 245 50% 20%;
+  --ring: 245 100% 14%;
+  /* #0A0047 */
+}
+
+* {
+  @apply border-border;
+}
+
+body {
+  @apply bg-background text-foreground;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+button,
+[type='button'],
+[type='submit'] {
+  @apply bg-primary text-primary-foreground hover:bg-primary/90;
+}

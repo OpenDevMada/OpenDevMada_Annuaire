@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membres - OpenDev Mada</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Theme Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: ['class'],
+            theme: {
+                container: {
+                    center: true,
+                    padding: '2rem',
+                    screens: {
+                        '2xl': '1400px',
+                    },
+                },
+                extend: {
+                    colors: {
+                        background: '#ffffff',
+                        foreground: '#0A0047',
+                        primary: {
+                            DEFAULT: '#0A0047',
+                            foreground: '#ffffff',
+                        },
+                        border: '#0A0047',
+                        input: '#e6e6fa',
+                        ring: '#0A0047',
+                        muted: {
+                            DEFAULT: '#e6e6fa',
+                            foreground: '#4b4b7c',
+                        },
+                        accent: {
+                            DEFAULT: '#0A0047',
+                            foreground: '#ffffff',
+                        },
+                        card: {
+                            DEFAULT: '#ffffff',
+                            foreground: '#0A0047',
+                        },
+                    },
+                    borderRadius: {
+                        lg: '0.5rem',
+                        md: '0.375rem',
+                        sm: '0.25rem',
+                    },
+                },
+            },
+        }
+    </script>
+    <!-- Custom CSS -->
+    <link href="assets/css/members.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-background font-sans antialiased text-foreground">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container flex h-16 items-center justify-between px-4">
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                        <span class="text-primary-foreground font-bold text-sm">OD</span>
+                    </div>
+                    <span class="text-xl font-bold text-primary">OpenDev Mada</span>
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                <a href="index.html" class="transition-colors hover:text-primary text-primary/90">Accueil</a>
+                <a href="members.html" class="transition-colors hover:text-primary text-primary font-semibold">Membres</a>
+                <a href="#services" class="transition-colors hover:text-primary text-primary/60">Services</a>
+                <a href="#contact" class="transition-colors hover:text-primary text-primary/60">Contact</a>
+            </nav>
+            
+            <div class="flex items-center gap-4">
+                <a href="#" class="hidden md:inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                    Se connecter
+                </a>
+                <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                    S'inscrire
+                </a>
+                
+                <!-- Mobile menu button -->
+                <button class="md:hidden p-2 rounded-md text-foreground/60 hover:text-foreground focus:outline-none" id="mobile-menu-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+                        <line x1="4" x2="20" y1="12" y2="12"></line>
+                        <line x1="4" x2="20" y1="6" y2="6"></line>
+                        <line x1="4" x2="20" y1="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden border-t bg-background/95 backdrop-blur-lg" id="mobile-menu">
+            <div class="container py-4 space-y-3">
+                <a href="index.html" class="block px-4 py-2 text-foreground/90 hover:bg-accent rounded-md">Accueil</a>
+                <a href="members.html" class="block px-4 py-2 text-primary font-semibold bg-accent rounded-md">Membres</a>
+                <a href="#services" class="block px-4 py-2 text-foreground/60 hover:bg-accent rounded-md">Services</a>
+                <a href="#contact" class="block px-4 py-2 text-foreground/60 hover:bg-accent rounded-md">Contact</a>
+                <a href="#" class="block px-4 py-2 text-foreground/60 hover:bg-accent rounded-md">Se connecter</a>
+                <a href="#" class="block px-4 py-2 text-primary-foreground bg-primary hover:bg-primary/90 rounded-md text-center">S'inscrire</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-card rounded-xl shadow-sm border border-border p-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-foreground">Nos Développeurs</h1>
+                    <p class="text-muted-foreground mt-2">Découvrez notre communauté de développeurs talentueux à Madagascar</p>
+                </div>
+                <a href="add-member.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2 text-base">
+                    <i class="fas fa-plus mr-2"></i> Ajouter un membre
+                </a>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="bg-muted/50 rounded-lg p-4 mb-8">
+                <!-- Search Bar -->
+                <div class="relative max-w-2xl mb-6">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-muted-foreground"></i>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="block w-full pl-10 pr-3 py-2 border border-input bg-background rounded-md shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        placeholder="Rechercher un développeur..."
+                    >
+                </div>
+                
+                <!-- Filters -->
+                <div class="filters flex flex-wrap gap-4">
+                    <div class="filter-group flex-1 min-w-[200px]">
+                        <label for="roleFilter" class="block text-sm font-medium text-foreground mb-1">Rôle</label>
+                        <select 
+                            id="roleFilter"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            <option value="">Tous les rôles</option>
+                            <option value="Frontend">Frontend</option>
+                            <option value="Backend">Backend</option>
+                            <option value="Fullstack">Fullstack</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="DevOps">DevOps</option>
+                            <option value="UI/UX">UI/UX</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group flex-1 min-w-[200px]">
+                        <label for="skillFilter" class="block text-sm font-medium text-foreground mb-1">Compétence</label>
+                        <select 
+                            id="skillFilter"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            <option value="">Toutes les compétences</option>
+                            <option value="React">React</option>
+                            <option value="Vue">Vue</option>
+                            <option value="Node.js">Node.js</option>
+                            <option value="Python">Python</option>
+                            <option value="Java">Java</option>
+                            <option value="PHP">PHP</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group flex-1 min-w-[200px]">
+                        <label for="locationFilter" class="block text-sm font-medium text-foreground mb-1">Localisation</label>
+                        <select 
+                            id="locationFilter"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            <option value="">Toutes les localisations</option>
+                            <option value="Antananarivo">Antananarivo</option>
+                            <option value="Antsirabe">Antsirabe</option>
+                            <option value="Fianarantsoa">Fianarantsoa</option>
+                            <option value="Mahajanga">Mahajanga</option>
+                            <option value="Toamasina">Toamasina</option>
+                            <option value="Toliara">Toliara</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="member-list">
+                <!-- Sample Member Card 1 -->
+                <div class="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div class="p-5">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="relative">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Jean Dupont" class="w-16 h-16 rounded-full border-2 border-primary/20 object-cover">
+                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-foreground">Jean Dupont</h3>
+                                <p class="text-sm text-muted-foreground">Développeur Fullstack</p>
+                                <div class="flex items-center mt-1">
+                                    <i class="fas fa-map-marker-alt text-xs text-muted-foreground mr-1"></i>
+                                    <span class="text-xs text-muted-foreground">Antananarivo</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">React</span>
+                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div class="p-5">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="relative">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Marie Rabe" class="w-16 h-16 rounded-full border-2 border-primary/20 object-cover">
+                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-foreground">Marie Rabe</h3>
+                                <p class="text-sm text-muted-foreground">UX/UI Designer</p>
+                                <div class="flex items-center mt-1">
+                                    <i class="fas fa-map-marker-alt text-xs text-muted-foreground mr-1"></i>
+                                    <span class="text-xs text-muted-foreground">Antananarivo</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">Figma</span>
+                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">UI Design</span>
+                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">Prototypage</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div class="p-5">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="relative">
+                                <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Andry Rakoto" class="w-16 h-16 rounded-full border-2 border-primary/20 object-cover">
+                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-foreground">Andry Rakoto</h3>
+                                <p class="text-sm text-muted-foreground">Développeur Mobile</p>
+                                <div class="flex items-center mt-1">
+                                    <i class="fas fa-map-marker-alt text-xs text-muted-foreground mr-1"></i>
+                                    <span class="text-xs text-muted-foreground">Antananarivo</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">React Native</span>
+                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">iOS</span>
+                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">Android</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-primary text-primary-foreground py-6 mt-12">
+        <div class="container text-center">
+            <p class="text-sm flex items-center justify-center gap-2">
+                <i class="fas fa-copyright"></i> 2025 - OpenDev Mada. Tous droits réservés.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.toggle('hidden');
+                const icon = mobileMenuButton.querySelector('svg');
+                
+                if (!isHidden) {
+                    icon.innerHTML = `
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    `;
+                } else {
+                    icon.innerHTML = `
+                        <line x1="4" x2="20" y1="12" y2="12"></line>
+                        <line x1="4" x2="20" y1="6" y2="6"></line>
+                        <line x1="4" x2="20" y1="18" y2="18"></line>
+                    `;
+                }
+            });
+            
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    const icon = mobileMenuButton.querySelector('svg');
+                    icon.innerHTML = `
+                        <line x1="4" x2="20" y1="12" y2="12"></line>
+                        <line x1="4" x2="20" y1="6" y2="6"></line>
+                        <line x1="4" x2="20" y1="18" y2="18"></line>
+                    `;
+                });
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute("href");
+                if (targetId === "#") return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = 100;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth",
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

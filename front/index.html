@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenDev</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom theme configuration -->
+    <script>
+      tailwind.config = {
+        darkMode: ["class"],
+        theme: {
+          container: {
+            center: true,
+            padding: "2rem",
+            screens: {
+              "2xl": "1400px",
+            },
+          },
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: "#0A0047",
+                foreground: "#ffffff",
+              },
+              secondary: {
+                DEFAULT: "#ffffff",
+                foreground: "#0A0047",
+              },
+            },
+            borderRadius: {
+              lg: "0.5rem",
+              md: "0.375rem",
+              sm: "0.25rem",
+            },
+          },
+        },
+      }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link href="assets/css/index.css" rel="stylesheet">
+
+</head>
+
+<body class="min-h-screen bg-background font-sans antialiased">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div class="container flex h-16 items-center justify-between px-4">
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+          <a href="#" class="flex items-center space-x-2">
+            <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+              <span class="text-white font-bold text-sm">OD</span>
+            </div>
+            <span class="text-xl font-bold text-primary">OpenDev Mada</span>
+          </a>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+          <a href="#" class="transition-colors hover:text-primary text-primary/90">Accueil</a>
+          <a href="#about" class="transition-colors hover:text-primary text-primary/60">À propos</a>
+          <a href="#services" class="transition-colors hover:text-primary text-primary/60">Services</a>
+          <a href="#contact" class="transition-colors hover:text-primary text-primary/60">Contact</a>
+        </nav>
+        
+        <div class="flex items-center gap-4">
+          <a href="#" class="hidden md:inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-primary/20 hover:bg-primary/10 hover:text-primary h-10 px-4 py-2">
+            Espace Membre
+          </a>
+          <button class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+            Se connecter
+          </button>
+          
+          <!-- Mobile menu button -->
+          <button class="md:hidden p-2 rounded-md text-primary/60 hover:text-primary focus:outline-none" id="mobile-menu-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+              <line x1="4" x2="20" y1="12" y2="12"></line>
+              <line x1="4" x2="20" y1="6" y2="6"></line>
+              <line x1="4" x2="20" y1="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile menu -->
+      <div class="md:hidden hidden border-t bg-background/95 backdrop-blur-lg" id="mobile-menu">
+        <div class="container py-4 space-y-3">
+          <a href="#" class="block px-4 py-2 text-primary/90 hover:bg-primary/10 rounded-md">Accueil</a>
+          <a href="#about" class="block px-4 py-2 text-primary/60 hover:bg-primary/10 rounded-md">À propos</a>
+          <a href="#services" class="block px-4 py-2 text-primary/60 hover:bg-primary/10 rounded-md">Services</a>
+          <a href="#contact" class="block px-4 py-2 text-primary/60 hover:bg-primary/10 rounded-md">Contact</a>
+          <a href="#" class="block px-4 py-2 text-primary/60 hover:bg-primary/10 rounded-md">Espace Membre</a>
+          <button class="w-full text-left px-4 py-2 text-primary/60 hover:bg-primary/10 rounded-md">Se connecter</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero">
+          <div class="content">
+            <h1>Annuaire des développeurs web</h1>
+            <p class="description">
+              Explorez les profils des développeurs web, découvrez leurs
+              expertises et faites grandir votre réseau professionnel à
+              Madagascar.
+            </p>
+            <div class="buttons">
+              <a href="members.html" class="btn btn-primary">
+                <span>Liste des membres</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
+              <a href="#" class="btn btn-secondary">
+                <span>Nous rejoindre</span>
+                <i class="fas fa-users"></i>
+              </a>
+            </div>
+          </div>
+          <div class="hero-image">
+            <div class="image-placeholder">
+              <div>
+                <i class="fas fa-code" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                <p>Développeurs web<br>à Madagascar</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- À propos Section -->
+      <section id="about" class="section bg-light">
+        <div class="section-header">
+          <h2>À propos de nous</h2>
+          <p>Découvrez notre mission et notre engagement envers la communauté des développeurs</p>
+        </div>
+        
+        <div class="about-content">
+          <div class="about-text">
+            <h3>Notre Mission</h3>
+            <p>
+              OpenDev Mada est une plateforme dédiée à la mise en relation des développeurs web à Madagascar. 
+              Notre objectif est de créer un écosystème dynamique où les talents du numérique peuvent se rencontrer, 
+              collaborer et grandir ensemble.
+            </p>
+            
+            <h3>Nos Valeurs</h3>
+            <ul class="values-list">
+              <li>
+                <i class="fas fa-users"></i>
+                <div>
+                  <strong>Communauté</strong> - Nous croyons en la force du partage et de l'entraide
+                </div>
+              </li>
+              <li>
+                <i class="fas fa-lightbulb"></i>
+                <div>
+                  <strong>Innovation</strong> - Nous encourageons la créativité et les nouvelles idées
+                </div>
+              </li>
+              <li>
+                <i class="fas fa-handshake"></i>
+                <div>
+                  <strong>Collaboration</strong> - Nous favorisons les partenariats gagnant-gagnant
+                </div>
+              </li>
+              <li>
+                <i class="fas fa-chart-line"></i>
+                <div>
+                  <strong>Croissance</strong> - Nous accompagnons le développement professionnel de chacun
+                </div>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="about-image">
+            <div class="about-image-placeholder">
+              <div>
+                <i class="fas fa-users" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                <p>Équipe OpenDev Mada</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section id="services" class="section">
+        <div class="section-header">
+          <h2>Nos Services</h2>
+          <p>
+            Découvrez comment nous pouvons vous aider à atteindre vos objectifs
+            techniques
+          </p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-search"></i>
+            </div>
+            <h3>Recrutement de talents</h3>
+            <p>
+              Trouvez les meilleurs développeurs pour votre entreprise avec
+              notre vaste réseau de professionnels qualifiés.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <h3>Opportunités professionnelles</h3>
+            <p>
+              Accédez à des offres d'emploi de qualité et développez votre
+              carrière dans le secteur technologique.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Réseautage</h3>
+            <p>
+              Élargissez votre réseau professionnel et collaborez avec d'autres
+              passionnés de technologie.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="section bg-light">
+        <div class="section-header">
+          <h2>Contactez-nous</h2>
+          <p>Une question ou une suggestion ? N'hésitez pas à nous contacter</p>
+        </div>
+        <div class="contact-container">
+          <div class="contact-info">
+            <h3>Informations de contact</h3>
+            <p><i class="fas fa-envelope"></i> contact@opendev.mg</p>
+            <p><i class="fas fa-phone"></i> +261 34 00 000 00</p>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar
+            </p>
+
+            <div class="social-links">
+              <a href="#" class="social-link">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="social-link">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-link">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="#" class="social-link">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <form class="contact-form">
+            <div class="form-group">
+              <input type="text" placeholder="Votre nom" required />
+            </div>
+            <div class="form-group">
+              <input type="email" placeholder="Votre email" required />
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Sujet" />
+            </div>
+            <div class="form-group">
+              <textarea
+                placeholder="Votre message"
+                rows="5"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Envoyer le message
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-column">
+          <h4>OpenDev Mada</h4>
+          <p style="color: #d3d3f1; line-height: 1.7; margin-bottom: 1.5rem">
+            La référence pour les développeurs web à Madagascar. Connectons les
+            talents aux opportunités.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Liens rapides</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> Accueil</a>
+            </li>
+            <li>
+              <a href="#about"><i class="fas fa-chevron-right"></i> À propos</a>
+            </li>
+            <li>
+              <a href="#services">
+                <i class="fas fa-chevron-right"></i> Services
+              </a>
+            </li>
+            <li>
+              <a href="#contact">
+                <i class="fas fa-chevron-right"></i> Contact
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-chevron-right"></i> Liste des membres
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Contactez-nous</h4>
+          <ul class="footer-links">
+            <li>
+              <i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar
+            </li>
+            <li><i class="fas fa-envelope"></i> contact@opendev.mg</li>
+            <li><i class="fas fa-phone"></i> +261 34 00 000 00</li>
+            <li><i class="fas fa-clock"></i> Lun - Ven: 9h - 18h</li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Newsletter</h4>
+          <p style="color: #d3d3f1; line-height: 1.7; margin-bottom: 1.5rem">
+            Abonnez-vous à notre newsletter pour recevoir les dernières
+            actualités et offres spéciales.
+          </p>
+          <form class="newsletter-form">
+            <div class="form-group" style="margin-bottom: 1rem">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Votre adresse email"
+                required
+              />
+            </div>
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-paper-plane"></i> S'abonner
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 OpenDev Mada. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="assets/js/index.js"></script>
+    <script>
+      
+      if (mobileMenuButton && mobileMenu) {
+        // Toggle mobile menu
+        mobileMenuButton.addEventListener('click', () => {
+          const isHidden = mobileMenu.classList.toggle('hidden');
+          const icon = mobileMenuButton.querySelector('svg');
+          
+          // Toggle between menu and close icon
+          if (!isHidden) {
+            icon.innerHTML = `
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            `;
+          } else {
+            icon.innerHTML = `
+              <line x1="4" x2="20" y1="12" y2="12"></line>
+              <line x1="4" x2="20" y1="6" y2="6"></line>
+              <line x1="4" x2="20" y1="18" y2="18"></line>
+            `;
+          }
+        });
+        
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a, button');
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            const icon = mobileMenuButton.querySelector('svg');
+            icon.innerHTML = `
+              <line x1="4" x2="20" y1="12" y2="12"></line>
+              <line x1="4" x2="20" y1="6" y2="6"></line>
+              <line x1="4" x2="20" y1="18" y2="18"></line>
+            `;
+          });
+        });
+      }
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href");
+          if (targetId === "#") return;
+
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            const headerOffset = 100; // Adjust based on your header height
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition =
+              elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Add active class to current section in navigation
+      const sections = document.querySelectorAll("section[id]");
+      const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+
+          if (pageYOffset >= sectionTop - 300) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${current}`) {
+            link.classList.add("active");
+          }
+        });
+      });
+
+      // Handle contact form submission
+      const contactForm = document.querySelector('.contact-form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          alert('Merci pour votre message ! Nous vous répondrons bientôt.');
+          this.reset();
+        });
+      }
+
+      // Handle newsletter form submission
+      const newsletterForm = document.querySelector('.newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          alert('Merci de vous être abonné à notre newsletter !');
+          this.reset();
+        });
+      }
+
+      // Add animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      // Observe sections for animation
+      document.querySelectorAll('.section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        observer.observe(section);
+      });
+    </script>
+</body>
+</html>

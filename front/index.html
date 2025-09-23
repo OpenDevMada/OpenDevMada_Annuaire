@@ -7,6 +7,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/index.css">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -108,7 +109,7 @@
       <section class="hero-section">
         <div class="hero">
           <div class="content">
-            <h1>Annuaire des développeurs web</h1>
+            <h1>Annuaire des membres : OpenDev Mada</h1>
             <p class="description">
               Explorez les profils des développeurs web, découvrez leurs
               expertises et faites grandir votre réseau professionnel à
@@ -244,7 +245,7 @@
         <div class="contact-container">
           <div class="contact-info">
             <h3>Informations de contact</h3>
-            <p><i class="fas fa-envelope"></i> contact@opendev.mg</p>
+            <p><i class="fas fa-envelope"></i>opendevmg@gmail.com</p>
             <p><i class="fas fa-phone"></i> +261 34 00 000 00</p>
             <p>
               <i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar
@@ -265,27 +266,14 @@
               </a>
             </div>
           </div>
-          <form class="contact-form">
-            <div class="form-group">
-              <input type="text" placeholder="Votre nom" required />
-            </div>
-            <div class="form-group">
-              <input type="email" placeholder="Votre email" required />
-            </div>
-            <div class="form-group">
-              <input type="text" placeholder="Sujet" />
-            </div>
-            <div class="form-group">
-              <textarea
-                placeholder="Votre message"
-                rows="5"
-                required
-              ></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              Envoyer le message
-            </button>
-          </form>
+          <!--Le formulaire de Contact-->
+         <form class="contact-form" action="contact.php" method="POST">
+            <input type="text" name="nom" placeholder="Votre nom" required />
+            <input type="email" name="email" placeholder="Votre email" required />
+            <input type="text" name="sujet" placeholder="Sujet" />
+            <textarea name="message" placeholder="Votre message" rows="5" required></textarea>
+            <button type="submit">Envoyer le message</button>
+         </form>
         </div>
       </section>
     </main>
@@ -347,7 +335,7 @@
             <li>
               <i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar
             </li>
-            <li><i class="fas fa-envelope"></i> contact@opendev.mg</li>
+            <li><i class="fas fa-envelope"></i> opendevmg@gmail.com</li>
             <li><i class="fas fa-phone"></i> +261 34 00 000 00</li>
             <li><i class="fas fa-clock"></i> Lun - Ven: 9h - 18h</li>
           </ul>

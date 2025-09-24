@@ -6,8 +6,37 @@
     <title>Détails du Membre - OpenDev</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Theme Configuration alignée sur le site -->
+    <script>
+      tailwind.config = {
+        darkMode: ['class'],
+        theme: {
+          container: { center: true, padding: '2rem', screens: { '2xl': '1400px' } },
+          extend: {
+            colors: {
+              background: '#ffffff',
+              foreground: '#0A0047',
+              primary: { DEFAULT: '#0A0047', foreground: '#ffffff' },
+              border: '#0A0047',
+              input: '#e6e6fa',
+              ring: '#0A0047',
+              muted: { DEFAULT: '#e6e6fa', foreground: '#4b4b7c' },
+              accent: { DEFAULT: '#0A0047', foreground: '#ffffff' },
+              card: { DEFAULT: '#ffffff', foreground: '#0A0047' },
+            },
+            borderRadius: { lg: '0.5rem', md: '0.375rem', sm: '0.25rem' },
+          }
+        }
+      }
+    </script>
     <style>
         /* Additional styles for member detail page */
+        :root {
+            --primary-color: #0A0047;
+            --border-color: #e6e6fa;
+        }
         .member-detail {
             background: white;
             border-radius: 8px;
@@ -18,9 +47,9 @@
         }
 
         main {
-            padding: 2rem;
-            max-width: 1000px;
-            margin: 8rem auto 2rem;
+            padding: 0;
+            max-width: none;
+            margin: 0;
         }
 
         .member-header {
@@ -161,55 +190,90 @@
     </style>
 </head>
 <body>
-    <!-- Floating background elements -->
-    <div class="floating-element floating-1">👤</div>
-    <div class="floating-element floating-2">💼</div>
-    <div class="floating-element floating-3">🚀</div>
+    <!-- Pas de header local: déjà géré globalement -->
 
-    <header>
-        <nav>
-            <a href="index.html" class="logo">OpenDev</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="members.html">Membres</a></li>
-                <li><a href="#" class="active">Profil</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-            <div class="auth-buttons">
-                <a href="#" class="sign-in">Sign in</a>
-                <a href="#" class="login-btn">Login</a>
-            </div>
-        </nav>
-        <div class="team-note">
-            <i class="fas fa-user-circle"></i> Détails du profil membre
-        </div>
-    </header>
-
-    <main>
-        <div class="container">
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
             <div class="member-detail">
-                <!-- Member details will be dynamically inserted here by JavaScript -->
+                <!-- Contenu injecté via app-member-detail.js -->
             </div>
-            
-            <div class="action-buttons">
-                <a href="members.html" class="btn btn-outline">
-                    <i class="fas fa-arrow-left"></i> Retour à la liste
-                </a>
-                <a href="#" class="btn" id="editMemberBtn">
-                    <i class="fas fa-edit"></i> Modifier le profil
-                </a>
-                <a href="#" class="btn btn-outline" id="deleteMemberBtn" style="color: #d32f2f; border-color: #d32f2f;">
-                    <i class="fas fa-trash"></i> Supprimer le membre
-                </a>
+        </div>
+
+        <div class="flex items-center gap-3 mt-6">
+            <a href="members.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                <i class="fas fa-arrow-left mr-2"></i> Retour à la liste
+            </a>
+            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" id="editMemberBtn">
+                <i class="fas fa-edit mr-2"></i> Modifier le profil
+            </button>
+            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white h-10 px-4 py-2" id="deleteMemberBtn">
+                <i class="fas fa-trash mr-2"></i> Supprimer le membre
+            </button>
+        </div>
+
+        <!-- Modale édition profil -->
+        <div id="editModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+          <div class="bg-card rounded-xl shadow-lg border border-border w-full max-w-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-xl font-semibold text-foreground">Modifier le profil</h3>
+              <button id="closeEditModal" class="text-foreground/60 hover:text-foreground">
+                <i class="fas fa-times"></i>
+              </button>
             </div>
+            <form id="editForm" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm mb-1">Email</label>
+                  <input type="email" id="editEmail" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="email@exemple.com">
+                </div>
+                <div>
+                  <label class="block text-sm mb-1">Téléphone</label>
+                  <input type="text" id="editPhone" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="034...">
+                </div>
+                <div>
+                  <label class="block text-sm mb-1">Adresse</label>
+                  <input type="text" id="editAddress" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="Quartier, rue">
+                </div>
+                <div>
+                  <label class="block text-sm mb-1">Ville</label>
+                  <input type="text" id="editCity" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="Antananarivo">
+                </div>
+                <div>
+                  <label class="block text-sm mb-1">Rôle</label>
+                  <select id="editRole" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    <option value="membre">Membre</option>
+                    <option value="admin">Admin</option>
+                    <option value="staff">Staff</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm mb-1">Statut</label>
+                  <select id="editStatus" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    <option value="active">Actif</option>
+                    <option value="inactive">Inactif</option>
+                  </select>
+                </div>
+                <div class="md:col-span-2">
+                  <label class="block text-sm mb-1">Nouveau mot de passe (optionnel)</label>
+                  <input type="password" id="editPassword" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="••••••••">
+                </div>
+                <div class="md:col-span-2">
+                  <label class="block text-sm mb-1">Nouvelle photo (optionnel)</label>
+                  <input type="file" id="editImage" accept="image/*" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                </div>
+              </div>
+              <div class="flex items-center justify-end gap-3 pt-2">
+                <button type="button" id="cancelEdit" class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">Annuler</button>
+                <button type="submit" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">Enregistrer</button>
+              </div>
+            </form>
+          </div>
         </div>
     </main>
 
-    <footer>
-        <p><i class="fas fa-copyright"></i> 2025 - OpenDev Mada. Tous droits réservés.</p>
-    </footer>
+    <!-- Pas de footer local: déjà géré globalement -->
 
-    <script src="js/data.js"></script>
-    <script src="js/script.js"></script>
-</body>
-</html>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app-member-detail.js"></script>
+  </body>
+  </html>

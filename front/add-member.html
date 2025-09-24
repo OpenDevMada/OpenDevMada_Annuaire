@@ -158,6 +158,50 @@
                     <input type="text" id="skills" name="skills" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="Ex: JavaScript, React, Node.js" required>
                     <div class="error-message">Veuillez entrer au moins une compétence</div>
                 </div>
+
+                <!-- Champs requis côté backend -->
+                <div class="form-group">
+                    <label for="password" class="block text-sm font-medium text-foreground mb-1 required">Mot de passe (compte membre)</label>
+                    <input type="password" id="password" name="password" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" required>
+                    <div class="error-message">Veuillez entrer un mot de passe</div>
+                </div>
+                <div class="form-group">
+                    <label for="birthday" class="block text-sm font-medium text-foreground mb-1">Date de naissance</label>
+                    <input type="date" id="birthday" name="birthday" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                </div>
+                <div class="form-group">
+                    <label for="sexe" class="block text-sm font-medium text-foreground mb-1">Sexe</label>
+                    <select id="sexe" name="sexe" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                        <option value="">Non précisé</option>
+                        <option value="Male">Homme</option>
+                        <option value="Female">Femme</option>
+                        <option value="Other">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="block text-sm font-medium text-foreground mb-1">Adresse</label>
+                    <input type="text" id="address" name="address" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="Quartier, rue">
+                </div>
+                <div class="form-group">
+                    <label for="city" class="block text-sm font-medium text-foreground mb-1">Ville</label>
+                    <input type="text" id="city" name="city" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="Antananarivo">
+                </div>
+                <div class="form-group">
+                    <label for="contry" class="block text-sm font-medium text-foreground mb-1">Pays</label>
+                    <input type="text" id="contry" name="contry" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="Madagascar">
+                </div>
+                <div class="form-group">
+                    <label for="statut" class="block text-sm font-medium text-foreground mb-1">Statut</label>
+                    <select id="statut" name="statut" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                        <option value="Actif" selected>Actif</option>
+                        <option value="Inactif">Inactif</option>
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <label for="image" class="block text-sm font-medium text-foreground mb-1 required">Photo de profil</label>
+                    <input type="file" id="image" name="image" accept="image/*" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" required>
+                    <div class="error-message">Veuillez choisir une image</div>
+                </div>
             </div>
 
             <div class="form-actions">
@@ -307,5 +351,8 @@
             });
         });
     </script>
+    <!-- Scripts d'intégration API backend -->
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app-add-member.js"></script>
 </body>
 </html>

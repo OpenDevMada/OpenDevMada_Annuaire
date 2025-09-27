@@ -1,342 +1,860 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membres - OpenDev Mada</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Développeurs - OpenDev Madagascar</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/media/logo_opendev.jpg" />
+    <link rel="apple-touch-icon" href="assets/media/logo_opendev.jpg" />
+    <meta name="theme-color" content="#0ea5e9" />
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Theme Configuration -->
+
+    <!-- Suppression de l'avertissement CDN en développement -->
     <script>
-        tailwind.config = {
-            darkMode: ['class'],
-            theme: {
-                container: {
-                    center: true,
-                    padding: '2rem',
-                    screens: {
-                        '2xl': '1400px',
-                    },
-                },
-                extend: {
-                    colors: {
-                        background: '#ffffff',
-                        foreground: '#0A0047',
-                        primary: {
-                            DEFAULT: '#0A0047',
-                            foreground: '#ffffff',
-                        },
-                        border: '#0A0047',
-                        input: '#e6e6fa',
-                        ring: '#0A0047',
-                        muted: {
-                            DEFAULT: '#e6e6fa',
-                            foreground: '#4b4b7c',
-                        },
-                        accent: {
-                            DEFAULT: '#0A0047',
-                            foreground: '#ffffff',
-                        },
-                        card: {
-                            DEFAULT: '#ffffff',
-                            foreground: '#0A0047',
-                        },
-                    },
-                    borderRadius: {
-                        lg: '0.5rem',
-                        md: '0.375rem',
-                        sm: '0.25rem',
-                    },
-                },
+      // Supprimer l'avertissement CDN Tailwind en développement local
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        const originalWarn = console.warn;
+        console.warn = function (...args) {
+          if (
+            !args
+              .join(" ")
+              .includes("cdn.tailwindcss.com should not be used in production")
+          ) {
+            originalWarn.apply(console, args);
+          }
+        };
+      }
+    </script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
             },
-        }
+            colors: {
+              primary: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+              },
+              gray: {
+                50: "#f8fafc",
+                100: "#f1f5f9",
+                200: "#e2e8f0",
+                300: "#cbd5e1",
+                400: "#94a3b8",
+                500: "#64748b",
+                600: "#475569",
+                700: "#334155",
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+            },
+            animation: {
+              "fade-in": "fadeIn 0.5s ease-in-out",
+              "slide-up": "slideUp 0.3s ease-out",
+              "scale-in": "scaleIn 0.2s ease-out",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0" },
+                "100%": { opacity: "1" },
+              },
+              slideUp: {
+                "0%": { transform: "translateY(10px)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+              scaleIn: {
+                "0%": { transform: "scale(0.95)", opacity: "0" },
+                "100%": { transform: "scale(1)", opacity: "1" },
+              },
+            },
+          },
+        },
+      };
     </script>
-    <!-- Custom CSS -->
-    <link href="assets/css/members.css" rel="stylesheet">
-</head>
-<body class="min-h-screen bg-background font-sans antialiased text-foreground">
+  </head>
+  <body class="bg-gray-50 text-gray-900 antialiased">
     <!-- Navigation -->
-    <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div class="container flex h-16 items-center justify-between px-4">
-            <!-- Logo -->
-            <div class="flex items-center gap-2">
-                <a href="index.html" class="flex items-center space-x-2">
-                    <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                        <span class="text-primary-foreground font-bold text-sm">OD</span>
-                    </div>
-                    <span class="text-xl font-bold text-primary">OpenDev Mada</span>
-                </a>
+    <nav
+      class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200 z-50 shadow-sm dark:bg-gray-900/95 dark:border-gray-700"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg overflow-hidden dark:bg-gray-800"
+            >
+              <img
+                src="assets/media/logo_opendev.jpg"
+                alt="OpenDev Madagascar"
+                class="w-8 h-8 rounded-lg object-cover"
+              />
             </div>
-            
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
-                <a href="index.html" class="transition-colors hover:text-primary text-primary/90">Accueil</a>
-                <a href="members.html" class="transition-colors hover:text-primary text-primary font-semibold">Membres</a>
-                <a href="#services" class="transition-colors hover:text-primary text-primary/60">Services</a>
-                <a href="#contact" class="transition-colors hover:text-primary text-primary/60">Contact</a>
-            </nav>
-            
-            <div class="flex items-center gap-4">
-                <a href="#" class="hidden md:inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
-                    Se connecter
-                </a>
-                <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                    S'inscrire
-                </a>
-                
-                <!-- Mobile menu button -->
-                <button class="md:hidden p-2 rounded-md text-foreground/60 hover:text-foreground focus:outline-none" id="mobile-menu-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
-                        <line x1="4" x2="20" y1="12" y2="12"></line>
-                        <line x1="4" x2="20" y1="6" y2="6"></line>
-                        <line x1="4" x2="20" y1="18" y2="18"></line>
-                    </svg>
+            <div>
+              <h1 class="text-xl font-bold text-gray-900 dark:text-white">
+                OpenDev
+              </h1>
+              <p class="text-xs text-gray-500 dark:text-gray-400 -mt-1">
+                Madagascar
+              </p>
+            </div>
+          </div>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html"
+              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >Accueil</a
+            >
+            <a
+              href="members.html"
+              class="text-primary-600 dark:text-primary-400 font-semibold transition-colors hover:text-primary-700 dark:hover:text-primary-300"
+              >Développeurs</a
+            >
+            <a
+              href="add-member.html"
+              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >Inscription</a
+            >
+            <a
+              href="#contact"
+              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >Contact</a
+            >
+          </div>
+
+          <!-- Theme Toggle & CTA -->
+          <div class="hidden md:flex items-center space-x-4">
+            <button
+              id="theme-toggle"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              title="Changer de thème"
+            >
+              <i
+                id="theme-icon"
+                class="fas fa-sun text-gray-600 dark:text-gray-300"
+              ></i>
+            </button>
+            <a
+              href="add-member.html"
+              class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-all duration-200 shadow-lg hover:shadow-xl font-medium"
+              >Rejoindre</a
+            >
+          </div>
+
+          <!-- Mobile menu button -->
+          <div class="md:hidden flex items-center space-x-2">
+            <button
+              id="mobile-theme-toggle"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              title="Changer de thème"
+            >
+              <i
+                id="mobile-theme-icon"
+                class="fas fa-sun text-gray-600 dark:text-gray-300"
+              ></i>
+            </button>
+            <button
+              id="mobile-menu-btn"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <i
+                id="mobile-menu-icon"
+                class="fas fa-bars text-gray-600 dark:text-gray-300"
+              ></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div
+          id="mobile-menu"
+          class="md:hidden hidden border-t border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md"
+        >
+          <div class="px-2 pt-2 pb-3 space-y-1">
+            <a
+              href="index.html"
+              class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+              >Accueil</a
+            >
+            <a
+              href="members.html"
+              class="block px-3 py-2 text-primary-600 dark:text-primary-400 font-semibold rounded-md"
+              >Développeurs</a
+            >
+            <a
+              href="add-member.html"
+              class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+              >Inscription</a
+            >
+            <a
+              href="#contact"
+              class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+              >Contact</a
+            >
+            <div
+              class="border-t border-gray-200 dark:border-gray-700 pt-3 mt-3"
+            >
+              <a
+                href="add-member.html"
+                class="block mx-3 px-4 py-2 bg-primary-600 text-white text-center rounded-lg hover:bg-primary-700 transition-colors font-medium"
+                >Rejoindre la communauté</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-primary-50 to-blue-50 py-16 pt-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Communauté des
+            <span
+              class="bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent"
+            >
+              Développeurs
+            </span>
+          </h1>
+          <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            Découvrez les talents tech de Madagascar. Connectez-vous avec des
+            développeurs passionnés, partagez vos projets et construisons
+            ensemble l'écosystème tech malgache.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          >
+            <div class="text-sm text-gray-500 flex items-center">
+              <i class="fas fa-users mr-2 text-primary-500"></i>
+              <span id="member-count">0</span> développeurs actifs
+            </div>
+            <div class="text-sm text-gray-500 flex items-center">
+              <i class="fas fa-map-marker-alt mr-2 text-primary-500"></i>
+              Antananarivo, Fianarantsoa, Toamasina...
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters & Search -->
+    <section
+      class="py-6 sm:py-8 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Mobile Filters Toggle -->
+        <div class="md:hidden mb-4">
+          <button
+            id="mobile-filters-btn"
+            class="w-full flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          >
+            <span class="text-gray-700 dark:text-gray-300 font-medium">
+              <i class="fas fa-filter mr-2"></i>
+              Filtres et recherche
+            </span>
+            <i
+              id="mobile-filters-icon"
+              class="fas fa-chevron-down text-gray-500"
+            ></i>
+          </button>
+        </div>
+
+        <!-- Search & Filters Container -->
+        <div id="filters-container" class="hidden md:block">
+          <div class="flex flex-col space-y-4">
+            <!-- Search -->
+            <div class="w-full relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <i class="fas fa-search text-gray-400"></i>
+              </div>
+              <input
+                type="text"
+                id="search-input"
+                placeholder="Rechercher par nom, compétence, ville..."
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              />
+            </div>
+
+            <!-- Filters Row -->
+            <div
+              class="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between"
+            >
+              <!-- Filter Selects -->
+              <div
+                class="flex flex-col sm:flex-row flex-wrap gap-3 w-full sm:w-auto"
+              >
+                <select
+                  id="city-filter"
+                  class="px-3 sm:px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+                >
+                  <option value="">Toutes les villes</option>
+                  <option value="Antananarivo">Antananarivo</option>
+                  <option value="Toamasina">Toamasina</option>
+                  <option value="Fianarantsoa">Fianarantsoa</option>
+                  <option value="Mahajanga">Mahajanga</option>
+                </select>
+
+                <select
+                  id="experience-filter"
+                  class="px-3 sm:px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+                >
+                  <option value="">Toute expérience</option>
+                  <option value="Junior">Junior (0-2 ans)</option>
+                  <option value="Mid">Mid (3-5 ans)</option>
+                  <option value="Senior">Senior (5+ ans)</option>
+                  <option value="Expert">Expert</option>
+                </select>
+
+                <select
+                  id="role-filter"
+                  class="px-3 sm:px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+                >
+                  <option value="">Tous les rôles</option>
+                  <option value="admin">Administrateur</option>
+                  <option value="membre">Membre</option>
+                </select>
+              </div>
+
+              <!-- View Toggle & Actions -->
+              <div
+                class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end"
+              >
+                <!-- Clear Filters -->
+                <button
+                  id="clear-filters"
+                  class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+                >
+                  <i class="fas fa-times mr-1"></i>
+                  Effacer
                 </button>
-            </div>
-        </div>
-        
-        <!-- Mobile menu -->
-        <div class="md:hidden hidden border-t bg-background/95 backdrop-blur-lg" id="mobile-menu">
-            <div class="container py-4 space-y-3">
-                <a href="index.html" class="block px-4 py-2 text-foreground/90 hover:bg-accent rounded-md">Accueil</a>
-                <a href="members.html" class="block px-4 py-2 text-primary font-semibold bg-accent rounded-md">Membres</a>
-                <a href="#services" class="block px-4 py-2 text-foreground/60 hover:bg-accent rounded-md">Services</a>
-                <a href="#contact" class="block px-4 py-2 text-foreground/60 hover:bg-accent rounded-md">Contact</a>
-                <a href="#" class="block px-4 py-2 text-foreground/60 hover:bg-accent rounded-md">Se connecter</a>
-                <a href="#" class="block px-4 py-2 text-primary-foreground bg-primary hover:bg-primary/90 rounded-md text-center">S'inscrire</a>
-            </div>
-        </div>
-    </header>
 
-    <main class="container mx-auto px-4 py-8">
-        <div class="bg-card rounded-xl shadow-sm border border-border p-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-                <div>
-                    <h1 class="text-3xl md:text-4xl font-bold text-foreground">Nos Développeurs</h1>
-                    <p class="text-muted-foreground mt-2">Découvrez notre communauté de développeurs talentueux à Madagascar</p>
+                <!-- View Toggle -->
+                <div class="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+                  <button
+                    id="grid-view"
+                    class="px-3 py-2 rounded-md bg-white dark:bg-gray-700 shadow-sm text-primary-600 dark:text-primary-400"
+                  >
+                    <i class="fas fa-th-large"></i>
+                  </button>
+                  <button
+                    id="list-view"
+                    class="px-3 py-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                  >
+                    <i class="fas fa-list"></i>
+                  </button>
                 </div>
-                <a href="add-member.html" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2 text-base">
-                    <i class="fas fa-plus mr-2"></i> Ajouter un membre
-                </a>
+              </div>
             </div>
-            
-            <!-- Search and Filters -->
-            <div class="bg-muted/50 rounded-lg p-4 mb-8">
-                <!-- Search Bar -->
-                <div class="relative max-w-2xl mb-6">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-search text-muted-foreground"></i>
-                    </div>
-                    <input 
-                        type="text" 
-                        id="searchInput" 
-                        class="block w-full pl-10 pr-3 py-2 border border-input bg-background rounded-md shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                        placeholder="Rechercher un développeur..."
-                    >
-                </div>
-                
-                <!-- Filters -->
-                <div class="filters flex flex-wrap gap-4">
-                    <div class="filter-group flex-1 min-w-[200px]">
-                        <label for="roleFilter" class="block text-sm font-medium text-foreground mb-1">Rôle</label>
-                        <select 
-                            id="roleFilter"
-                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                            <option value="">Tous les rôles</option>
-                            <option value="Frontend">Frontend</option>
-                            <option value="Backend">Backend</option>
-                            <option value="Fullstack">Fullstack</option>
-                            <option value="Mobile">Mobile</option>
-                            <option value="DevOps">DevOps</option>
-                            <option value="UI/UX">UI/UX</option>
-                        </select>
-                    </div>
-                    
-                    <div class="filter-group flex-1 min-w-[200px]">
-                        <label for="skillFilter" class="block text-sm font-medium text-foreground mb-1">Compétence</label>
-                        <select 
-                            id="skillFilter"
-                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                            <option value="">Toutes les compétences</option>
-                            <option value="React">React</option>
-                            <option value="Vue">Vue</option>
-                            <option value="Node.js">Node.js</option>
-                            <option value="Python">Python</option>
-                            <option value="Java">Java</option>
-                            <option value="PHP">PHP</option>
-                        </select>
-                    </div>
-                    
-                    <div class="filter-group flex-1 min-w-[200px]">
-                        <label for="locationFilter" class="block text-sm font-medium text-foreground mb-1">Localisation</label>
-                        <select 
-                            id="locationFilter"
-                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                            <option value="">Toutes les localisations</option>
-                            <option value="Antananarivo">Antananarivo</option>
-                            <option value="Antsirabe">Antsirabe</option>
-                            <option value="Fianarantsoa">Fianarantsoa</option>
-                            <option value="Mahajanga">Mahajanga</option>
-                            <option value="Toamasina">Toamasina</option>
-                            <option value="Toliara">Toliara</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="member-list">
-                <!-- Sample Member Card 1 -->
-                <div class="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-                    <div class="p-5">
-                        <div class="flex items-center space-x-4 mb-4">
-                            <div class="relative">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Jean Dupont" class="w-16 h-16 rounded-full border-2 border-primary/20 object-cover">
-                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-lg text-foreground">Jean Dupont</h3>
-                                <p class="text-sm text-muted-foreground">Développeur Fullstack</p>
-                                <div class="flex items-center mt-1">
-                                    <i class="fas fa-map-marker-alt text-xs text-muted-foreground mr-1"></i>
-                                    <span class="text-xs text-muted-foreground">Antananarivo</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">React</span>
-                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">Node.js</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-                    <div class="p-5">
-                        <div class="flex items-center space-x-4 mb-4">
-                            <div class="relative">
-                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Marie Rabe" class="w-16 h-16 rounded-full border-2 border-primary/20 object-cover">
-                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-lg text-foreground">Marie Rabe</h3>
-                                <p class="text-sm text-muted-foreground">UX/UI Designer</p>
-                                <div class="flex items-center mt-1">
-                                    <i class="fas fa-map-marker-alt text-xs text-muted-foreground mr-1"></i>
-                                    <span class="text-xs text-muted-foreground">Antananarivo</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">Figma</span>
-                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">UI Design</span>
-                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">Prototypage</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-                    <div class="p-5">
-                        <div class="flex items-center space-x-4 mb-4">
-                            <div class="relative">
-                                <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Andry Rakoto" class="w-16 h-16 rounded-full border-2 border-primary/20 object-cover">
-                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-lg text-foreground">Andry Rakoto</h3>
-                                <p class="text-sm text-muted-foreground">Développeur Mobile</p>
-                                <div class="flex items-center mt-1">
-                                    <i class="fas fa-map-marker-alt text-xs text-muted-foreground mr-1"></i>
-                                    <span class="text-xs text-muted-foreground">Antananarivo</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">React Native</span>
-                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">iOS</span>
-                            <span class="skill-tag bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">Android</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
 
-    <footer class="bg-primary text-primary-foreground py-6 mt-12">
-        <div class="container text-center">
-            <p class="text-sm flex items-center justify-center gap-2">
-                <i class="fas fa-copyright"></i> 2025 - OpenDev Mada. Tous droits réservés.
+            <!-- Tech Stack Filter -->
+            <div class="mt-4">
+              <h3
+                class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3"
+              >
+                Technologies populaires
+              </h3>
+              <div class="flex flex-wrap gap-2" id="tech-filters">
+                <!-- Sera rempli dynamiquement -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Members Grid -->
+    <section class="py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Loading State -->
+        <div id="loading" class="text-center py-12">
+          <div
+            class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"
+          ></div>
+          <p class="mt-4 text-gray-600">Chargement des développeurs...</p>
+        </div>
+
+        <!-- Members Container -->
+        <div id="members-container" class="hidden">
+          <div
+            id="members-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
+            <!-- Sera rempli dynamiquement -->
+          </div>
+
+          <!-- No Results -->
+          <div id="no-results" class="hidden text-center py-12">
+            <div
+              class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fas fa-search text-gray-400 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+              Aucun développeur trouvé
+            </h3>
+            <p class="text-gray-600">
+              Essayez de modifier vos critères de recherche
             </p>
+          </div>
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <!-- Custom JavaScript -->
+    <!-- Scripts -->
+    <script src="assets/js/theme-manager.js"></script>
+    <script src="assets/js/api.js"></script>
     <script>
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById("mobile-menu-button");
-        const mobileMenu = document.getElementById("mobile-menu");
-        
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                const isHidden = mobileMenu.classList.toggle('hidden');
-                const icon = mobileMenuButton.querySelector('svg');
-                
-                if (!isHidden) {
-                    icon.innerHTML = `
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    `;
-                } else {
-                    icon.innerHTML = `
-                        <line x1="4" x2="20" y1="12" y2="12"></line>
-                        <line x1="4" x2="20" y1="6" y2="6"></line>
-                        <line x1="4" x2="20" y1="18" y2="18"></line>
-                    `;
-                }
-            });
-            
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                    const icon = mobileMenuButton.querySelector('svg');
-                    icon.innerHTML = `
-                        <line x1="4" x2="20" y1="12" y2="12"></line>
-                        <line x1="4" x2="20" y1="6" y2="6"></line>
-                        <line x1="4" x2="20" y1="18" y2="18"></line>
-                    `;
-                });
-            });
+      // Variables globales
+      let allMembers = [];
+      let filteredMembers = [];
+      let currentView = "grid";
+
+      // DOM Elements
+      const membersGrid = document.getElementById("members-grid");
+      const loadingElement = document.getElementById("loading");
+      const membersContainer = document.getElementById("members-container");
+      const noResults = document.getElementById("no-results");
+      const searchInput = document.getElementById("search-input");
+      const memberCount = document.getElementById("member-count");
+      const techFilters = document.getElementById("tech-filters");
+
+      // Initialisation
+      document.addEventListener("DOMContentLoaded", async () => {
+        await loadMembers();
+        setupEventListeners();
+        setupThemeToggle();
+      });
+
+      // Charger les membres
+      async function loadMembers() {
+        try {
+          allMembers = await window.ODMApi.fetchMembers();
+          filteredMembers = [...allMembers];
+
+          displayMembers();
+          updateMemberCount();
+          generateTechFilters();
+
+          // Masquer le loading
+          loadingElement.classList.add("hidden");
+          membersContainer.classList.remove("hidden");
+        } catch (error) {
+          console.error("Erreur lors du chargement:", error);
+          loadingElement.innerHTML =
+            '<p class="text-red-600">Erreur lors du chargement des données</p>';
+        }
+      }
+
+      // Afficher les membres
+      function displayMembers() {
+        if (filteredMembers.length === 0) {
+          membersGrid.classList.add("hidden");
+          noResults.classList.remove("hidden");
+          return;
         }
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-            anchor.addEventListener("click", function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute("href");
-                if (targetId === "#") return;
+        membersGrid.classList.remove("hidden");
+        noResults.classList.add("hidden");
 
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const headerOffset = 100;
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        membersGrid.innerHTML = filteredMembers
+          .map((member) => createMemberCard(member))
+          .join("");
 
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth",
-                    });
-                }
-            });
+        // Animation d'apparition
+        setTimeout(() => {
+          const cards = membersGrid.querySelectorAll(".member-card");
+          cards.forEach((card, index) => {
+            setTimeout(() => {
+              card.classList.add("animate-slide-up");
+            }, index * 50);
+          });
+        }, 50);
+      }
+
+      // Créer une carte de membre
+      function createMemberCard(member) {
+        const techBadges = (member.competences || [])
+          .slice(0, 3)
+          .map(
+            (skill) =>
+              `<span class="px-2 py-1 bg-primary-50 text-primary-700 text-xs rounded-full">${skill}</span>`
+          )
+          .join("");
+
+        const moreSkills =
+          member.competences && member.competences.length > 3
+            ? `<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">+${
+                member.competences.length - 3
+              }</span>`
+            : "";
+
+        return `
+                <div class="member-card bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-200 cursor-pointer opacity-0" 
+                     onclick="viewMemberDetail(${member.id})">
+                    <!-- Header -->
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="${window.ODMApi.imageUrl(
+                                  member.photo_profil
+                                )}" 
+                                     alt="${member.prenom} ${member.nom}"
+                                     class="w-12 h-12 rounded-xl object-cover ring-2 ring-primary-100">
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900">${
+                                  member.prenom
+                                } ${member.nom}</h3>
+                                <p class="text-sm text-gray-600">${
+                                  member.poste || "Développeur"
+                                }</p>
+                            </div>
+                        </div>
+                        ${
+                          member.role === "admin"
+                            ? '<span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Admin</span>'
+                            : ""
+                        }
+                    </div>
+
+                    <!-- Bio -->
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">${
+                      member.bio || "Passionné de développement"
+                    }</p>
+
+                    <!-- Skills -->
+                    <div class="flex flex-wrap gap-1 mb-4">
+                        ${techBadges}
+                        ${moreSkills}
+                    </div>
+
+                    <!-- Location & Contact -->
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-1"></i>
+                            <span>${member.ville || "Madagascar"}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            ${
+                              member.email
+                                ? '<i class="fas fa-envelope hover:text-primary-600 cursor-pointer"></i>'
+                                : ""
+                            }
+                            ${
+                              member.telephone
+                                ? '<i class="fas fa-phone hover:text-primary-600 cursor-pointer"></i>'
+                                : ""
+                            }
+                            <i class="fas fa-external-link-alt hover:text-primary-600 cursor-pointer"></i>
+                        </div>
+                    </div>
+                </div>
+            `;
+      }
+
+      // Générer les filtres de technologies
+      function generateTechFilters() {
+        const allSkills = new Set();
+        allMembers.forEach((member) => {
+          if (member.competences) {
+            member.competences.forEach((skill) => allSkills.add(skill));
+          }
         });
+
+        const popularSkills = Array.from(allSkills).slice(0, 8);
+
+        techFilters.innerHTML = popularSkills
+          .map(
+            (skill) => `
+                <button class="tech-filter px-3 py-1 text-sm border border-gray-300 rounded-full hover:border-primary-500 hover:text-primary-600 transition-colors" 
+                        data-skill="${skill}">
+                    ${skill}
+                </button>
+            `
+          )
+          .join("");
+
+        // Event listeners pour les filtres tech
+        document.querySelectorAll(".tech-filter").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.target.classList.toggle("bg-primary-500");
+            e.target.classList.toggle("text-white");
+            e.target.classList.toggle("border-primary-500");
+            applyFilters();
+          });
+        });
+      }
+
+      // Configuration des event listeners
+      function setupEventListeners() {
+        // Recherche en temps réel
+        searchInput.addEventListener("input", debounce(applyFilters, 300));
+
+        // Filtres
+        document
+          .getElementById("city-filter")
+          .addEventListener("change", applyFilters);
+        document
+          .getElementById("experience-filter")
+          .addEventListener("change", applyFilters);
+        document
+          .getElementById("role-filter")
+          .addEventListener("change", applyFilters);
+
+        // Toggle vue
+        document
+          .getElementById("grid-view")
+          .addEventListener("click", () => setView("grid"));
+        document
+          .getElementById("list-view")
+          .addEventListener("click", () => setView("list"));
+      }
+
+      // Appliquer les filtres
+      function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const cityFilter = document.getElementById("city-filter").value;
+        const experienceFilter =
+          document.getElementById("experience-filter").value;
+        const roleFilter = document.getElementById("role-filter").value;
+
+        const activeTechFilters = Array.from(
+          document.querySelectorAll(".tech-filter.bg-primary-500")
+        ).map((btn) => btn.dataset.skill);
+
+        filteredMembers = allMembers.filter((member) => {
+          // Recherche texte
+          const matchesSearch =
+            !searchTerm ||
+            member.nom.toLowerCase().includes(searchTerm) ||
+            member.prenom.toLowerCase().includes(searchTerm) ||
+            (member.poste && member.poste.toLowerCase().includes(searchTerm)) ||
+            (member.ville && member.ville.toLowerCase().includes(searchTerm)) ||
+            (member.competences &&
+              member.competences.some((skill) =>
+                skill.toLowerCase().includes(searchTerm)
+              ));
+
+          // Filtre ville
+          const matchesCity = !cityFilter || member.ville === cityFilter;
+
+          // Filtre expérience
+          const matchesExperience =
+            !experienceFilter ||
+            (member.experience &&
+              member.experience.includes(experienceFilter.toLowerCase()));
+
+          // Filtre rôle
+          const matchesRole = !roleFilter || member.role === roleFilter;
+
+          // Filtre technologies
+          const matchesTech =
+            activeTechFilters.length === 0 ||
+            (member.competences &&
+              activeTechFilters.some((tech) =>
+                member.competences.includes(tech)
+              ));
+
+          return (
+            matchesSearch &&
+            matchesCity &&
+            matchesExperience &&
+            matchesRole &&
+            matchesTech
+          );
+        });
+
+        displayMembers();
+        updateMemberCount();
+      }
+
+      // Mettre à jour le compteur
+      function updateMemberCount() {
+        memberCount.textContent = filteredMembers.length;
+      }
+
+      // Vue membre détail
+      function viewMemberDetail(memberId) {
+        window.location.href = `member-detail.html?id=${memberId}`;
+      }
+
+      // Changer la vue
+      function setView(view) {
+        currentView = view;
+        const gridBtn = document.getElementById("grid-view");
+        const listBtn = document.getElementById("list-view");
+
+        if (view === "grid") {
+          gridBtn.classList.add("bg-white", "shadow-sm", "text-primary-600");
+          gridBtn.classList.remove("text-gray-600");
+          listBtn.classList.remove("bg-white", "shadow-sm", "text-primary-600");
+          listBtn.classList.add("text-gray-600");
+          membersGrid.className =
+            "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6";
+        } else {
+          listBtn.classList.add("bg-white", "shadow-sm", "text-primary-600");
+          listBtn.classList.remove("text-gray-600");
+          gridBtn.classList.remove("bg-white", "shadow-sm", "text-primary-600");
+          gridBtn.classList.add("text-gray-600");
+          membersGrid.className = "grid grid-cols-1 gap-3";
+        }
+        displayMembers();
+      }
+
+      // Theme toggle
+      function setupThemeToggle() {
+        const themeToggle = document.getElementById("theme-toggle");
+        const html = document.documentElement;
+
+        themeToggle.addEventListener("click", () => {
+          if (html.classList.contains("dark")) {
+            html.classList.remove("dark");
+            themeToggle.innerHTML = '<i class="fas fa-sun text-gray-600"></i>';
+            localStorage.setItem("theme", "light");
+          } else {
+            html.classList.add("dark");
+            themeToggle.innerHTML = '<i class="fas fa-moon text-gray-300"></i>';
+            localStorage.setItem("theme", "dark");
+          }
+        });
+
+        // Charger le thème sauvegardé
+        if (localStorage.getItem("theme") === "dark") {
+          html.classList.add("dark");
+          themeToggle.innerHTML = '<i class="fas fa-moon text-gray-300"></i>';
+        }
+      }
+
+      // Utilitaire debounce
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      // Mobile Menu Toggle
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileMenuIcon = document.getElementById("mobile-menu-icon");
+
+      if (mobileMenuBtn && mobileMenu && mobileMenuIcon) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+          if (mobileMenu.classList.contains("hidden")) {
+            mobileMenuIcon.classList.remove("fa-times");
+            mobileMenuIcon.classList.add("fa-bars");
+          } else {
+            mobileMenuIcon.classList.remove("fa-bars");
+            mobileMenuIcon.classList.add("fa-times");
+          }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener("click", (e) => {
+          if (
+            !mobileMenuBtn.contains(e.target) &&
+            !mobileMenu.contains(e.target)
+          ) {
+            mobileMenu.classList.add("hidden");
+            mobileMenuIcon.classList.remove("fa-times");
+            mobileMenuIcon.classList.add("fa-bars");
+          }
+        });
+
+        // Close mobile menu when clicking on links
+        mobileMenu.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+            mobileMenuIcon.classList.remove("fa-times");
+            mobileMenuIcon.classList.add("fa-bars");
+          });
+        });
+      }
+
+      // Mobile Filters Toggle
+      const mobileFiltersBtn = document.getElementById("mobile-filters-btn");
+      const filtersContainer = document.getElementById("filters-container");
+      const mobileFiltersIcon = document.getElementById("mobile-filters-icon");
+
+      if (mobileFiltersBtn && filtersContainer && mobileFiltersIcon) {
+        mobileFiltersBtn.addEventListener("click", () => {
+          filtersContainer.classList.toggle("hidden");
+          if (filtersContainer.classList.contains("hidden")) {
+            mobileFiltersIcon.classList.remove("fa-chevron-up");
+            mobileFiltersIcon.classList.add("fa-chevron-down");
+          } else {
+            mobileFiltersIcon.classList.remove("fa-chevron-down");
+            mobileFiltersIcon.classList.add("fa-chevron-up");
+          }
+        });
+      }
+
+      // Clear Filters
+      const clearFiltersBtn = document.getElementById("clear-filters");
+      if (clearFiltersBtn) {
+        clearFiltersBtn.addEventListener("click", () => {
+          document.getElementById("search-input").value = "";
+          document.getElementById("city-filter").value = "";
+          document.getElementById("experience-filter").value = "";
+          document.getElementById("role-filter").value = "";
+
+          // Clear tech filters
+          document
+            .querySelectorAll("#tech-filters .tech-filter")
+            .forEach((btn) => {
+              btn.classList.remove("bg-primary-500", "text-white");
+              btn.classList.add("bg-gray-100", "text-gray-700");
+            });
+
+          // Re-render all members
+          renderMembers(allMembers);
+        });
+      }
     </script>
-    <!-- Scripts d'intégration API backend -->
-    <script src="assets/js/api.js"></script>
-    <script src="assets/js/app-members.js"></script>
-</body>
+  </body>
 </html>

@@ -1,501 +1,1113 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
+<html lang="fr" class="scroll-smooth">
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OpenDev</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="assets/css/index.css">
-    
+    <title>OpenDev Madagascar - Communauté Tech</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/media/logo_opendev.jpg" />
+    <link rel="apple-touch-icon" href="assets/media/logo_opendev.jpg" />
+    <meta name="theme-color" content="#0ea5e9" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Custom theme configuration -->
+
+    <!-- Suppression de l'avertissement CDN en développement -->
+    <script>
+      // Supprimer l'avertissement CDN Tailwind en développement local
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        const originalWarn = console.warn;
+        console.warn = function (...args) {
+          if (
+            !args
+              .join(" ")
+              .includes("cdn.tailwindcss.com should not be used in production")
+          ) {
+            originalWarn.apply(console, args);
+          }
+        };
+      }
+    </script>
+
+    <!-- Tailwind Configuration -->
     <script>
       tailwind.config = {
-        darkMode: ["class"],
+        darkMode: "class",
         theme: {
-          container: {
-            center: true,
-            padding: "2rem",
-            screens: {
-              "2xl": "1400px",
-            },
-          },
           extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
             colors: {
               primary: {
-                DEFAULT: "#0A0047",
-                foreground: "#ffffff",
-              },
-              secondary: {
-                DEFAULT: "#ffffff",
-                foreground: "#0A0047",
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
               },
             },
-            borderRadius: {
-              lg: "0.5rem",
-              md: "0.375rem",
-              sm: "0.25rem",
+            animation: {
+              "fade-in": "fadeIn 0.5s ease-in-out",
+              "slide-up": "slideUp 0.3s ease-out",
+              float: "float 6s ease-in-out infinite",
+              gradient: "gradient 8s ease infinite",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0" },
+                "100%": { opacity: "1" },
+              },
+              slideUp: {
+                "0%": { transform: "translateY(30px)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+              float: {
+                "0%, 100%": { transform: "translateY(0px)" },
+                "50%": { transform: "translateY(-20px)" },
+              },
+              gradient: {
+                "0%, 100%": { backgroundPosition: "0% 50%" },
+                "50%": { backgroundPosition: "100% 50%" },
+              },
             },
           },
         },
-      }
+      };
     </script>
-    
-    <!-- Custom CSS -->
-    <link href="assets/css/index.css" rel="stylesheet">
 
-</head>
+    <!-- Styles pour l'animation de développement -->
+    <style>
+      /* Animation des lignes de code */
+      .code-matrix {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
 
-<body class="min-h-screen bg-background font-sans antialiased">
+      .code-line {
+        position: absolute;
+        white-space: nowrap;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 14px;
+        animation: slideCodeHorizontal var(--duration, 15s) linear infinite;
+        animation-delay: var(--delay, 0s);
+        opacity: 0.7;
+        transform: translateX(-100%);
+      }
+
+      @keyframes slideCodeHorizontal {
+        0% {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+        }
+        90% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateX(100vw);
+          opacity: 0;
+        }
+      }
+
+      /* Animation des particules de code */
+      .code-particles {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .particle {
+        position: absolute;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 24px;
+        font-weight: bold;
+        color: #60a5fa;
+        animation: floatParticle var(--duration, 10s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+        opacity: 0.6;
+      }
+
+      @keyframes floatParticle {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+          opacity: 0.3;
+        }
+        25% {
+          opacity: 0.8;
+        }
+        50% {
+          transform: translateY(-30px) rotate(180deg);
+          opacity: 0.6;
+        }
+        75% {
+          opacity: 0.4;
+        }
+      }
+
+      /* Formes géométriques tech */
+      .tech-shapes {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .tech-circle {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        border: 2px solid #3b82f6;
+        border-radius: 50%;
+        animation: pulse var(--duration, 4s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+      }
+
+      .tech-square {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border: 2px solid #10b981;
+        animation: rotate var(--duration, 6s) linear infinite;
+        animation-delay: var(--delay, 0s);
+      }
+
+      .tech-triangle {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 25px solid transparent;
+        border-right: 25px solid transparent;
+        border-bottom: 43px solid #f59e0b;
+        animation: bounce var(--duration, 3s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+      }
+
+      .tech-hexagon {
+        position: absolute;
+        width: 40px;
+        height: 23px;
+        background: #8b5cf6;
+        position: relative;
+        animation: wiggle var(--duration, 5s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+      }
+
+      .tech-hexagon:before,
+      .tech-hexagon:after {
+        content: "";
+        position: absolute;
+        width: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+      }
+
+      .tech-hexagon:before {
+        bottom: 100%;
+        border-bottom: 12px solid #8b5cf6;
+      }
+
+      .tech-hexagon:after {
+        top: 100%;
+        border-top: 12px solid #8b5cf6;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.8;
+        }
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      @keyframes wiggle {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(5deg);
+        }
+        75% {
+          transform: rotate(-5deg);
+        }
+      }
+
+      /* Effet de brillance sur le texte */
+      .text-glow {
+        text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+      }
+
+      /* Animation d'apparition plus fluide pour le contenu */
+      .fade-in-up {
+        animation: fadeInUp 1s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-900 antialiased">
     <!-- Navigation -->
-    <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div class="container flex h-16 items-center justify-between px-4">
-        <!-- Logo -->
-        <div class="flex items-center gap-2">
-          <a href="#" class="flex items-center space-x-2">
-            <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-              <span class="text-white font-bold text-sm">OD</span>
+    <nav
+      class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200 z-50 shadow-sm dark:bg-gray-900/95 dark:border-gray-700"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg overflow-hidden dark:bg-gray-800"
+            >
+              <img
+                src="assets/media/logo_opendev.jpg"
+                alt="OpenDev Madagascar"
+                class="w-8 h-8 rounded-lg object-cover"
+              />
             </div>
-            <span class="text-xl font-bold text-primary">OpenDev Mada</span>
-          </a>
-        </div>
-        
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
-          <a href="#" class="transition-colors hover:text-primary text-primary/90">Accueil</a>
-          <a href="#about" class="transition-colors hover:text-primary text-primary/60">À propos</a>
-          <a href="#services" class="transition-colors hover:text-primary text-primary/60">Services</a>
-          <a href="#contact" class="transition-colors hover:text-primary text-primary/60">Contact</a>
-        </nav>
-        
-        <div class="flex items-center gap-4">
-          <a href="#" class="hidden md:inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-primary/20 hover:bg-primary/10 hover:text-primary h-10 px-4 py-2">
-            Espace Membre
-          </a>
-          <button class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-            Se connecter
-          </button>
-          
-          <!-- Mobile menu button -->
-          <button class="md:hidden p-2 rounded-md text-primary/60 hover:text-primary focus:outline-none" id="mobile-menu-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
-              <line x1="4" x2="20" y1="12" y2="12"></line>
-              <line x1="4" x2="20" y1="6" y2="6"></line>
-              <line x1="4" x2="20" y1="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-      </div>
-      
-      <!-- Mobile menu -->
-      <div class="md:hidden hidden border-t bg-background/95 backdrop-blur-lg" id="mobile-menu">
-        <div class="container py-4 space-y-3">
-          <a href="#" class="block px-4 py-2 text-primary/90 hover:bg-primary/10 rounded-md">Accueil</a>
-          <a href="#about" class="block px-4 py-2 text-primary/60 hover:bg-primary/10 rounded-md">À propos</a>
-          <a href="#services" class="block px-4 py-2 text-primary/60 hover:bg-primary/10 rounded-md">Services</a>
-          <a href="#contact" class="block px-4 py-2 text-primary/60 hover:bg-primary/10 rounded-md">Contact</a>
-          <a href="#" class="block px-4 py-2 text-primary/60 hover:bg-primary/10 rounded-md">Espace Membre</a>
-          <button class="w-full text-left px-4 py-2 text-primary/60 hover:bg-primary/10 rounded-md">Se connecter</button>
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <!-- Hero Section -->
-      <section class="hero-section">
-        <div class="hero">
-          <div class="content">
-            <h1>Annuaire des membres : OpenDev Mada</h1>
-            <p class="description">
-              Explorez les profils des développeurs web, découvrez leurs
-              expertises et faites grandir votre réseau professionnel à
-              Madagascar.
-            </p>
-            <div class="buttons">
-              <a href="members.html" class="btn btn-primary">
-                <span>Liste des membres</span>
-                <i class="fas fa-arrow-right"></i>
-              </a>
-              <a href="#" class="btn btn-secondary">
-                <span>Nous rejoindre</span>
-                <i class="fas fa-users"></i>
-              </a>
+            <div>
+              <h1 class="text-xl font-bold text-gray-900 dark:text-white">
+                OpenDev
+              </h1>
+              <p class="text-xs text-gray-500 dark:text-gray-400 -mt-1">
+                Madagascar
+              </p>
             </div>
           </div>
-          <div class="hero-image">
-            <div class="image-placeholder">
-              <div>
-                <i class="fas fa-code" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                <p>Développeurs web<br>à Madagascar</p>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html"
+              class="text-primary-600 dark:text-primary-400 font-semibold transition-colors hover:text-primary-700 dark:hover:text-primary-300"
+              >Accueil</a
+            >
+            <a
+              href="members.html"
+              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >Développeurs</a
+            >
+            <a
+              href="add-member.html"
+              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >Inscription</a
+            >
+            <a
+              href="#contact"
+              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >Contact</a
+            >
+          </div>
+
+          <!-- Theme Toggle & CTA -->
+          <div class="hidden md:flex items-center space-x-4">
+            <button
+              id="theme-toggle"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              title="Changer de thème"
+            >
+              <i
+                id="theme-icon"
+                class="fas fa-sun text-gray-600 dark:text-gray-300"
+              ></i>
+            </button>
+            <a
+              href="add-member.html"
+              class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-all duration-200 shadow-lg hover:shadow-xl font-medium"
+              >Rejoindre</a
+            >
+          </div>
+
+          <!-- Mobile menu button -->
+          <div class="md:hidden flex items-center space-x-2">
+            <button
+              id="mobile-theme-toggle"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              title="Changer de thème"
+            >
+              <i
+                id="mobile-theme-icon"
+                class="fas fa-sun text-gray-600 dark:text-gray-300"
+              ></i>
+            </button>
+            <button
+              id="mobile-menu-btn"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <i
+                id="mobile-menu-icon"
+                class="fas fa-bars text-gray-600 dark:text-gray-300"
+              ></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div
+          id="mobile-menu"
+          class="md:hidden hidden border-t border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md"
+        >
+          <div class="px-2 pt-2 pb-3 space-y-1">
+            <a
+              href="index.html"
+              class="block px-3 py-2 text-primary-600 dark:text-primary-400 font-semibold rounded-md"
+              >Accueil</a
+            >
+            <a
+              href="members.html"
+              class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+              >Développeurs</a
+            >
+            <a
+              href="add-member.html"
+              class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+              >Inscription</a
+            >
+            <a
+              href="#contact"
+              class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+              >Contact</a
+            >
+            <div
+              class="border-t border-gray-200 dark:border-gray-700 pt-3 mt-3"
+            >
+              <a
+                href="add-member.html"
+                class="block mx-3 px-4 py-2 bg-primary-600 text-white text-center rounded-lg hover:bg-primary-700 transition-colors font-medium"
+                >Rejoindre la communauté</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      id="home"
+      class="relative min-h-screen flex items-center overflow-hidden"
+    >
+      <!-- Background Animation de Développement -->
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900/90 to-indigo-900"
+      ></div>
+
+      <!-- Code Matrix Animation -->
+      <div
+        class="absolute inset-0 overflow-hidden pointer-events-none opacity-20"
+      >
+        <div class="code-matrix">
+          <div class="code-line" style="--delay: 0s; --duration: 15s; top: 10%">
+            <span class="text-green-400">function</span>
+            <span class="text-blue-400">fetchData</span>() {
+            <span class="text-yellow-400">return</span>
+            <span class="text-purple-400">await</span> api.get('/users'); }
+          </div>
+          <div class="code-line" style="--delay: 2s; --duration: 18s; top: 20%">
+            <span class="text-red-400">const</span>
+            <span class="text-cyan-400">app</span> =
+            <span class="text-yellow-400">new</span>
+            <span class="text-green-400">Express</span>();
+          </div>
+          <div class="code-line" style="--delay: 4s; --duration: 12s; top: 30%">
+            <span class="text-purple-400">import</span> {
+            <span class="text-blue-400">useState</span>,
+            <span class="text-blue-400">useEffect</span> }
+            <span class="text-purple-400">from</span> '<span
+              class="text-orange-400"
+              >react</span
+            >';
+          </div>
+          <div class="code-line" style="--delay: 1s; --duration: 20s; top: 40%">
+            <span class="text-green-400">git</span>
+            <span class="text-cyan-400">commit</span> -m "<span
+              class="text-yellow-400"
+              >feat: nouvelle fonctionnalité</span
+            >"
+          </div>
+          <div class="code-line" style="--delay: 3s; --duration: 16s; top: 50%">
+            <span class="text-red-400">class</span>
+            <span class="text-blue-400">Developer</span> {
+            <span class="text-green-400">constructor</span>() {
+            <span class="text-purple-400">this</span>.skills = []; } }
+          </div>
+          <div class="code-line" style="--delay: 5s; --duration: 14s; top: 60%">
+            <span class="text-cyan-400">npm</span>
+            <span class="text-yellow-400">install</span>
+            <span class="text-green-400">--save</span> express mongoose cors
+          </div>
+          <div
+            class="code-line"
+            style="--delay: 2.5s; --duration: 17s; top: 70%"
+          >
+            <span class="text-blue-400">SELECT</span> *
+            <span class="text-red-400">FROM</span>
+            <span class="text-green-400">developers</span>
+            <span class="text-blue-400">WHERE</span> location = '<span
+              class="text-yellow-400"
+              >Madagascar</span
+            >';
+          </div>
+          <div
+            class="code-line"
+            style="--delay: 4.5s; --duration: 13s; top: 80%"
+          >
+            <span class="text-purple-400">docker</span>
+            <span class="text-cyan-400">run</span> -p
+            <span class="text-yellow-400">3000:3000</span>
+            <span class="text-green-400">opendev-app</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Particules de Code -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="code-particles">
+          <div
+            class="particle"
+            style="--delay: 0s; --duration: 8s; left: 10%; top: 20%"
+          >
+            &lt;/&gt;
+          </div>
+          <div
+            class="particle"
+            style="--delay: 1s; --duration: 12s; left: 80%; top: 10%"
+          >
+            {}
+          </div>
+          <div
+            class="particle"
+            style="--delay: 2s; --duration: 10s; left: 20%; top: 70%"
+          >
+            []
+          </div>
+          <div
+            class="particle"
+            style="--delay: 3s; --duration: 15s; left: 70%; top: 60%"
+          >
+            =&gt;
+          </div>
+          <div
+            class="particle"
+            style="--delay: 4s; --duration: 9s; left: 50%; top: 30%"
+          >
+            $
+          </div>
+          <div
+            class="particle"
+            style="--delay: 5s; --duration: 11s; left: 90%; top: 80%"
+          >
+            #
+          </div>
+          <div
+            class="particle"
+            style="--delay: 1.5s; --duration: 13s; left: 30%; top: 90%"
+          >
+            @
+          </div>
+          <div
+            class="particle"
+            style="--delay: 3.5s; --duration: 7s; left: 60%; top: 15%"
+          >
+            *
+          </div>
+          <div
+            class="particle"
+            style="--delay: 2.5s; --duration: 14s; left: 15%; top: 50%"
+          >
+            +
+          </div>
+          <div
+            class="particle"
+            style="--delay: 4.5s; --duration: 6s; left: 85%; top: 40%"
+          >
+            ~
+          </div>
+        </div>
+      </div>
+
+      <!-- Éléments Géométriques Tech -->
+      <div
+        class="absolute inset-0 overflow-hidden pointer-events-none opacity-30"
+      >
+        <div class="tech-shapes">
+          <div
+            class="tech-circle"
+            style="--delay: 0s; top: 20%; left: 10%"
+          ></div>
+          <div
+            class="tech-square"
+            style="--delay: 2s; top: 60%; right: 15%"
+          ></div>
+          <div
+            class="tech-triangle"
+            style="--delay: 4s; bottom: 30%; left: 70%"
+          ></div>
+          <div
+            class="tech-hexagon"
+            style="--delay: 1s; top: 40%; right: 30%"
+          ></div>
+        </div>
+      </div>
+
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <!-- Content -->
+          <div class="space-y-8 fade-in-up">
+            <div class="space-y-4">
+              <div
+                class="inline-flex items-center px-2 py-1 bg-primary-100 rounded-full text-primary-700 text-xs font-medium"
+              >
+                <span
+                  class="w-1 h-1 bg-primary-500 rounded-full mr-1.5 animate-pulse"
+                ></span>
+                Communauté Tech Madagascar
+              </div>
+
+              <h1 class="text-2xl lg:text-4xl font-bold leading-tight">
+                <span class="block text-white text-glow">Construisons</span>
+                <span
+                  class="block bg-gradient-to-r from-primary-300 to-blue-300 bg-clip-text text-transparent"
+                >
+                  l'avenir tech
+                </span>
+                <span class="block text-white text-glow">ensemble</span>
+              </h1>
+
+              <p class="text-base text-gray-200 max-w-2xl">
+                Rejoignez la plus grande communauté de développeurs de
+                Madagascar. Partagez vos connaissances, collaborez sur des
+                projets innovants et façonnez l'écosystème technologique
+                malgache.
+              </p>
+            </div>
+
+            <!-- CTAs -->
+            <div class="flex flex-col sm:flex-row gap-4">
+              <a
+                href="members.html"
+                class="inline-flex items-center justify-center px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all shadow-lg hover:shadow-xl"
+              >
+                Découvrir les développeurs
+                <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+              <a
+                href="#about"
+                class="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 font-semibold rounded-xl border-2 border-gray-200 hover:border-primary-300 transition-all"
+              >
+                En savoir plus
+                <i class="fas fa-play ml-2 text-primary-600"></i>
+              </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-4 pt-4">
+              <div class="text-center">
+                <div class="text-xl font-bold text-white" id="members-stat">
+                  0
+                </div>
+                <div class="text-xs text-gray-300">Développeurs</div>
+              </div>
+              <div class="text-center">
+                <div class="text-xl font-bold text-white">15+</div>
+                <div class="text-xs text-gray-300">Technologies</div>
+              </div>
+              <div class="text-center">
+                <div class="text-xl font-bold text-white">6</div>
+                <div class="text-xs text-gray-300">Villes</div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- À propos Section -->
-      <section id="about" class="section bg-light">
-        <div class="section-header">
-          <h2>À propos de nous</h2>
-          <p>Découvrez notre mission et notre engagement envers la communauté des développeurs</p>
+          <!-- Visual -->
+          <div class="relative">
+            <div class="relative z-10">
+              <!-- Code Editor Mockup -->
+              <div class="bg-gray-900 rounded-2xl p-6 shadow-2xl">
+                <div class="flex items-center space-x-2 mb-4">
+                  <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                  <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                </div>
+                <div class="space-y-2 font-mono text-sm">
+                  <div class="text-green-400">// OpenDev Madagascar</div>
+                  <div class="text-blue-400">
+                    const <span class="text-yellow-300">community</span> = {
+                  </div>
+                  <div class="text-white ml-4">
+                    name:
+                    <span class="text-orange-400">'OpenDev Madagascar'</span>,
+                  </div>
+                  <div class="text-white ml-4">
+                    mission:
+                    <span class="text-orange-400"
+                      >'Développer l\'écosystème tech'</span
+                    >,
+                  </div>
+                  <div class="text-white ml-4">
+                    members:
+                    <span class="text-purple-400" id="code-members">0</span>,
+                  </div>
+                  <div class="text-white ml-4">technologies: [</div>
+                  <div class="text-orange-400 ml-8">
+                    'JavaScript', 'Python', 'React'
+                  </div>
+                  <div class="text-white ml-4">]</div>
+                  <div class="text-blue-400">};</div>
+                  <div class="text-green-400 mt-4">// Rejoignez-nous ! 🚀</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating Tech Icons -->
+            <div
+              class="absolute -top-4 -right-4 w-16 h-16 bg-yellow-400 rounded-2xl flex items-center justify-center shadow-lg animate-float"
+            >
+              <i class="fab fa-js-square text-2xl text-gray-900"></i>
+            </div>
+            <div
+              class="absolute top-20 -left-4 w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg animate-float"
+              style="animation-delay: 1s"
+            >
+              <i class="fab fa-python text-xl text-white"></i>
+            </div>
+            <div
+              class="absolute -bottom-4 right-12 w-14 h-14 bg-cyan-400 rounded-2xl flex items-center justify-center shadow-lg animate-float"
+              style="animation-delay: 3s"
+            >
+              <i class="fab fa-react text-2xl text-gray-900"></i>
+            </div>
+          </div>
         </div>
-        
-        <div class="about-content">
-          <div class="about-text">
-            <h3>Notre Mission</h3>
-            <p>
-              OpenDev Mada est une plateforme dédiée à la mise en relation des développeurs web à Madagascar. 
-              Notre objectif est de créer un écosystème dynamique où les talents du numérique peuvent se rencontrer, 
-              collaborer et grandir ensemble.
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Une communauté, mille opportunités
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            OpenDev Madagascar rassemble les talents tech de la Grande Île. Que
+            vous soyez débutant ou expert, trouvez votre place dans notre
+            écosystème dynamique.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Feature 1 -->
+          <div class="text-center group">
+            <div
+              class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary-200 transition-colors"
+            >
+              <i class="fas fa-users text-2xl text-primary-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">
+              Réseau Professionnel
+            </h3>
+            <p class="text-gray-600">
+              Connectez-vous avec des développeurs, designers, et entrepreneurs
+              tech de Madagascar.
             </p>
-            
-            <h3>Nos Valeurs</h3>
-            <ul class="values-list">
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="text-center group">
+            <div
+              class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary-200 transition-colors"
+            >
+              <i class="fas fa-code text-2xl text-primary-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">
+              Projets Collaboratifs
+            </h3>
+            <p class="text-gray-600">
+              Participez à des projets open source et initiatives qui impactent
+              la société malgache.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="text-center group">
+            <div
+              class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary-200 transition-colors"
+            >
+              <i class="fas fa-graduation-cap text-2xl text-primary-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">
+              Formation Continue
+            </h3>
+            <p class="text-gray-600">
+              Accédez à des workshops, conférences et ressources pour développer
+              vos compétences.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Members -->
+    <section class="py-24 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Nos développeurs stars
+          </h2>
+          <p class="text-xl text-gray-600">
+            Découvrez quelques-uns des talents qui font la richesse de notre
+            communauté
+          </p>
+        </div>
+
+        <div
+          id="featured-members"
+          class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <!-- Sera rempli dynamiquement -->
+        </div>
+
+        <div class="text-center mt-12">
+          <a
+            href="members.html"
+            class="inline-flex items-center px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all"
+          >
+            Voir tous les développeurs
+            <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Prêt à nous rejoindre ?
+          </h2>
+          <p class="text-xl text-gray-600 mb-8">
+            Faites partie de la révolution tech malgache. Ensemble, construisons
+            l'avenir numérique de Madagascar.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="add-member.html"
+              class="inline-flex items-center justify-center px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all shadow-lg"
+            >
+              Rejoindre la communauté
+              <i class="fas fa-user-plus ml-2"></i>
+            </a>
+            <a
+              href="mailto:contact@opendev.mg"
+              class="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 font-semibold rounded-xl border-2 border-gray-200 hover:border-primary-300 transition-all"
+            >
+              Nous contacter
+              <i class="fas fa-envelope ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8">
+          <!-- Brand -->
+          <div class="space-y-4">
+            <div class="flex items-center space-x-3">
+              <div
+                class="w-10 h-10 bg-white rounded-xl flex items-center justify-center overflow-hidden"
+              >
+                <img
+                  src="assets/media/logo_opendev.jpg"
+                  alt="OpenDev Madagascar"
+                  class="w-8 h-8 rounded-lg object-cover"
+                />
+              </div>
+              <div>
+                <h3 class="text-xl font-bold">OpenDev</h3>
+                <p class="text-sm text-gray-400 -mt-1">Madagascar</p>
+              </div>
+            </div>
+            <p class="text-gray-400">
+              La communauté tech qui unit les développeurs de Madagascar.
+            </p>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <h4 class="font-semibold mb-4">Communauté</h4>
+            <ul class="space-y-2 text-gray-400">
               <li>
-                <i class="fas fa-users"></i>
-                <div>
-                  <strong>Communauté</strong> - Nous croyons en la force du partage et de l'entraide
-                </div>
+                <a
+                  href="members.html"
+                  class="hover:text-white transition-colors"
+                  >Développeurs</a
+                >
               </li>
               <li>
-                <i class="fas fa-lightbulb"></i>
-                <div>
-                  <strong>Innovation</strong> - Nous encourageons la créativité et les nouvelles idées
-                </div>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Projets</a
+                >
               </li>
               <li>
-                <i class="fas fa-handshake"></i>
-                <div>
-                  <strong>Collaboration</strong> - Nous favorisons les partenariats gagnant-gagnant
-                </div>
-              </li>
-              <li>
-                <i class="fas fa-chart-line"></i>
-                <div>
-                  <strong>Croissance</strong> - Nous accompagnons le développement professionnel de chacun
-                </div>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Événements</a
+                >
               </li>
             </ul>
           </div>
-          
-          <div class="about-image">
-            <div class="about-image-placeholder">
-              <div>
-                <i class="fas fa-users" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                <p>Équipe OpenDev Mada</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- Services Section -->
-      <section id="services" class="section">
-        <div class="section-header">
-          <h2>Nos Services</h2>
-          <p>
-            Découvrez comment nous pouvons vous aider à atteindre vos objectifs
-            techniques
-          </p>
-        </div>
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-icon">
-              <i class="fas fa-search"></i>
-            </div>
-            <h3>Recrutement de talents</h3>
-            <p>
-              Trouvez les meilleurs développeurs pour votre entreprise avec
-              notre vaste réseau de professionnels qualifiés.
-            </p>
+          <!-- Resources -->
+          <div>
+            <h4 class="font-semibold mb-4">Ressources</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">Blog</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Tutoriels</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">API</a>
+              </li>
+            </ul>
           </div>
-          <div class="service-card">
-            <div class="service-icon">
-              <i class="fas fa-briefcase"></i>
-            </div>
-            <h3>Opportunités professionnelles</h3>
-            <p>
-              Accédez à des offres d'emploi de qualité et développez votre
-              carrière dans le secteur technologique.
-            </p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <h3>Réseautage</h3>
-            <p>
-              Élargissez votre réseau professionnel et collaborez avec d'autres
-              passionnés de technologie.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      <!-- Contact Section -->
-      <section id="contact" class="section bg-light">
-        <div class="section-header">
-          <h2>Contactez-nous</h2>
-          <p>Une question ou une suggestion ? N'hésitez pas à nous contacter</p>
-        </div>
-        <div class="contact-container">
-          <div class="contact-info">
-            <h3>Informations de contact</h3>
-            <p><i class="fas fa-envelope"></i>opendevmg@gmail.com</p>
-            <p><i class="fas fa-phone"></i> +261 34 00 000 00</p>
-            <p>
-              <i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar
-            </p>
-
-            <div class="social-links">
-              <a href="#" class="social-link">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-link">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-link">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a href="#" class="social-link">
+          <!-- Social -->
+          <div>
+            <h4 class="font-semibold mb-4">Suivez-nous</h4>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
+              >
                 <i class="fab fa-github"></i>
               </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
+              >
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
+              >
+                <i class="fab fa-twitter"></i>
+              </a>
             </div>
           </div>
-          <!--Le formulaire de Contact-->
-         <form class="contact-form" action="contact.php" method="POST">
-            <input type="text" name="nom" placeholder="Votre nom" required />
-            <input type="email" name="email" placeholder="Votre email" required />
-            <input type="text" name="sujet" placeholder="Sujet" />
-            <textarea name="message" placeholder="Votre message" rows="5" required></textarea>
-            <button type="submit">Envoyer le message</button>
-         </form>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div class="footer-content">
-        <div class="footer-column">
-          <h4>OpenDev Mada</h4>
-          <p style="color: #d3d3f1; line-height: 1.7; margin-bottom: 1.5rem">
-            La référence pour les développeurs web à Madagascar. Connectons les
-            talents aux opportunités.
-          </p>
-          <div class="social-links">
-            <a href="#" class="social-link" aria-label="Facebook">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" class="social-link" aria-label="Twitter">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="social-link" aria-label="LinkedIn">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="#" class="social-link" aria-label="GitHub">
-              <i class="fab fa-github"></i>
-            </a>
-          </div>
         </div>
 
-        <div class="footer-column">
-          <h4>Liens rapides</h4>
-          <ul class="footer-links">
-            <li>
-              <a href="#"><i class="fas fa-chevron-right"></i> Accueil</a>
-            </li>
-            <li>
-              <a href="#about"><i class="fas fa-chevron-right"></i> À propos</a>
-            </li>
-            <li>
-              <a href="#services">
-                <i class="fas fa-chevron-right"></i> Services
-              </a>
-            </li>
-            <li>
-              <a href="#contact">
-                <i class="fas fa-chevron-right"></i> Contact
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fas fa-chevron-right"></i> Liste des membres
-              </a>
-            </li>
-          </ul>
+        <div
+          class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400"
+        >
+          <p>&copy; 2025 OpenDev Madagascar. Tous droits réservés.</p>
         </div>
-
-        <div class="footer-column">
-          <h4>Contactez-nous</h4>
-          <ul class="footer-links">
-            <li>
-              <i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar
-            </li>
-            <li><i class="fas fa-envelope"></i> opendevmg@gmail.com</li>
-            <li><i class="fas fa-phone"></i> +261 34 00 000 00</li>
-            <li><i class="fas fa-clock"></i> Lun - Ven: 9h - 18h</li>
-          </ul>
-        </div>
-
-        <div class="footer-column">
-          <h4>Newsletter</h4>
-          <p style="color: #d3d3f1; line-height: 1.7; margin-bottom: 1.5rem">
-            Abonnez-vous à notre newsletter pour recevoir les dernières
-            actualités et offres spéciales.
-          </p>
-          <form class="newsletter-form">
-            <div class="form-group" style="margin-bottom: 1rem">
-              <input
-                type="email"
-                class="form-control"
-                placeholder="Votre adresse email"
-                required
-              />
-            </div>
-            <button type="submit" class="submit-btn">
-              <i class="fas fa-paper-plane"></i> S'abonner
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2025 OpenDev Mada. Tous droits réservés.</p>
       </div>
     </footer>
 
-    <!-- Custom JavaScript -->
-    <script src="assets/js/index.js"></script>
+    <!-- Scripts -->
+    <script src="assets/js/theme-manager.js"></script>
+    <script src="assets/js/api.js"></script>
     <script>
-      
-      if (mobileMenuButton && mobileMenu) {
-        // Toggle mobile menu
-        mobileMenuButton.addEventListener('click', () => {
-          const isHidden = mobileMenu.classList.toggle('hidden');
-          const icon = mobileMenuButton.querySelector('svg');
-          
-          // Toggle between menu and close icon
-          if (!isHidden) {
-            icon.innerHTML = `
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            `;
-          } else {
-            icon.innerHTML = `
-              <line x1="4" x2="20" y1="12" y2="12"></line>
-              <line x1="4" x2="20" y1="6" y2="6"></line>
-              <line x1="4" x2="20" y1="18" y2="18"></line>
-            `;
+      // Animation des statistiques
+      function animateCounter(element, target) {
+        let count = 0;
+        const increment = target / 50;
+        const timer = setInterval(() => {
+          count += increment;
+          if (count >= target) {
+            count = target;
+            clearInterval(timer);
           }
-        });
-        
-        // Close mobile menu when clicking on a link
-        const mobileLinks = mobileMenu.querySelectorAll('a, button');
-        mobileLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-            const icon = mobileMenuButton.querySelector('svg');
-            icon.innerHTML = `
-              <line x1="4" x2="20" y1="12" y2="12"></line>
-              <line x1="4" x2="20" y1="6" y2="6"></line>
-              <line x1="4" x2="20" y1="18" y2="18"></line>
-            `;
-          });
-        });
+          element.textContent = Math.floor(count);
+        }, 50);
       }
 
-      // Smooth scrolling for anchor links
+      // Charger les membres featured
+      async function loadFeaturedMembers() {
+        try {
+          const members = await window.ODMApi.fetchMembers();
+          const membersCount = members.length;
+
+          // Animer les statistiques
+          animateCounter(document.getElementById("members-stat"), membersCount);
+          animateCounter(document.getElementById("code-members"), membersCount);
+
+          // Afficher quelques membres
+          const featuredContainer = document.getElementById("featured-members");
+          const featured = members.slice(0, 3);
+
+          featuredContainer.innerHTML = featured
+            .map(
+              (member) => `
+                    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all group cursor-pointer" 
+                         onclick="window.location.href='member-detail.html?id=${
+                           member.id
+                         }'">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <img src="${window.ODMApi.imageUrl(
+                              member.photo_profil
+                            )}" 
+                                 alt="${member.prenom} ${member.nom}"
+                                 class="w-16 h-16 rounded-xl object-cover">
+                            <div>
+                                <h3 class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                                    ${member.prenom} ${member.nom}
+                                </h3>
+                                <p class="text-sm text-gray-600">${
+                                  member.poste || "Développeur"
+                                }</p>
+                                <p class="text-xs text-gray-500">${
+                                  member.ville || "Madagascar"
+                                }</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">${(
+                          member.bio || "Développeur passionné"
+                        ).substring(0, 100)}...</p>
+                        <div class="flex flex-wrap gap-1">
+                            ${(member.competences || [])
+                              .slice(0, 3)
+                              .map(
+                                (skill) =>
+                                  `<span class="px-2 py-1 bg-primary-50 text-primary-700 text-xs rounded-full">${skill}</span>`
+                              )
+                              .join("")}
+                        </div>
+                    </div>
+                `
+            )
+            .join("");
+        } catch (error) {
+          console.error("Erreur lors du chargement des membres:", error);
+        }
+      }
+
+      // Mobile menu
+      document
+        .getElementById("mobile-menu-btn")
+        .addEventListener("click", () => {
+          alert("Menu mobile - À implémenter");
+        });
+
+      // Smooth scroll
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           e.preventDefault();
-          const targetId = this.getAttribute("href");
-          if (targetId === "#") return;
-
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) {
-            const headerOffset = 100; // Adjust based on your header height
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition =
-              elementPosition + window.pageYOffset - headerOffset;
-
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth",
-            });
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         });
       });
 
-      // Add active class to current section in navigation
-      const sections = document.querySelectorAll("section[id]");
-      const navLinks = document.querySelectorAll('nav a[href^="#"]');
+      // Initialisation
+      document.addEventListener("DOMContentLoaded", loadFeaturedMembers);
 
-      window.addEventListener("scroll", () => {
-        let current = "";
+      // Mobile Menu Toggle
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileMenuIcon = document.getElementById("mobile-menu-icon");
 
-        sections.forEach((section) => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-
-          if (pageYOffset >= sectionTop - 300) {
-            current = section.getAttribute("id");
-          }
-        });
-
-        navLinks.forEach((link) => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === `#${current}`) {
-            link.classList.add("active");
-          }
-        });
+      mobileMenuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        if (mobileMenu.classList.contains("hidden")) {
+          mobileMenuIcon.classList.remove("fa-times");
+          mobileMenuIcon.classList.add("fa-bars");
+        } else {
+          mobileMenuIcon.classList.remove("fa-bars");
+          mobileMenuIcon.classList.add("fa-times");
+        }
       });
 
-      // Handle contact form submission
-      const contactForm = document.querySelector('.contact-form');
-      if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          alert('Merci pour votre message ! Nous vous répondrons bientôt.');
-          this.reset();
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", (e) => {
+        if (
+          !mobileMenuBtn.contains(e.target) &&
+          !mobileMenu.contains(e.target)
+        ) {
+          mobileMenu.classList.add("hidden");
+          mobileMenuIcon.classList.remove("fa-times");
+          mobileMenuIcon.classList.add("fa-bars");
+        }
+      });
+
+      // Close mobile menu when clicking on links
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+          mobileMenuIcon.classList.remove("fa-times");
+          mobileMenuIcon.classList.add("fa-bars");
         });
-      }
-
-      // Handle newsletter form submission
-      const newsletterForm = document.querySelector('.newsletter-form');
-      if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          alert('Merci de vous être abonné à notre newsletter !');
-          this.reset();
-        });
-      }
-
-      // Add animation on scroll
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      }, observerOptions);
-
-      // Observe sections for animation
-      document.querySelectorAll('.section').forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        observer.observe(section);
       });
     </script>
-</body>
+
+    <!-- Script de tests backend (développement) -->
+    <script src="assets/js/backend-tests.js"></script>
+  </body>
 </html>

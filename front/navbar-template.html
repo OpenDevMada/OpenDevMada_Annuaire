@@ -1,0 +1,149 @@
+<!-- Template de Navigation Homogène pour OpenDev Madagascar -->
+<!-- À adapter selon la page active -->
+
+<nav
+  class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200 z-50 shadow-sm dark:bg-gray-900/95 dark:border-gray-700"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex items-center space-x-3">
+        <div
+          class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg overflow-hidden dark:bg-gray-800"
+        >
+          <img
+            src="assets/media/logo_opendev.jpg"
+            alt="OpenDev Madagascar"
+            class="w-8 h-8 rounded-lg object-cover"
+          />
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900 dark:text-white">
+            OpenDev
+          </h1>
+          <p class="text-xs text-gray-500 dark:text-gray-400 -mt-1">
+            Madagascar
+          </p>
+        </div>
+      </div>
+
+      <!-- Desktop Navigation Links -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a
+          href="index.html"
+          class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium"
+          >Accueil</a
+        >
+        <a
+          href="members.html"
+          class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium"
+          >Développeurs</a
+        >
+        <a
+          href="index.html#about"
+          class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium"
+          >À propos</a
+        >
+        <a
+          href="index.html#contact"
+          class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium"
+          >Contact</a
+        >
+        <a
+          href="add-member.html"
+          class="bg-primary-600 dark:bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors font-medium"
+          >Rejoindre</a
+        >
+      </div>
+
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      >
+        <i
+          id="mobile-menu-icon"
+          class="fas fa-bars text-gray-600 dark:text-gray-300"
+        ></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div
+      id="mobile-menu"
+      class="md:hidden hidden border-t border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md"
+    >
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a
+          href="index.html"
+          class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors font-medium"
+        >
+          <i class="fas fa-home mr-2 w-4"></i>Accueil
+        </a>
+        <a
+          href="members.html"
+          class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors font-medium"
+        >
+          <i class="fas fa-users mr-2 w-4"></i>Développeurs
+        </a>
+        <a
+          href="index.html#about"
+          class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors font-medium"
+        >
+          <i class="fas fa-info-circle mr-2 w-4"></i>À propos
+        </a>
+        <a
+          href="index.html#contact"
+          class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors font-medium"
+        >
+          <i class="fas fa-envelope mr-2 w-4"></i>Contact
+        </a>
+        <a
+          href="add-member.html"
+          class="block mx-3 mt-4 px-4 py-2 bg-primary-600 dark:bg-primary-500 text-white text-center rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors font-medium"
+        >
+          <i class="fas fa-user-plus mr-2"></i>Rejoindre la communauté
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- JavaScript pour le menu mobile -->
+<script>
+  // Mobile Menu Toggle
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileMenuIcon = document.getElementById("mobile-menu-icon");
+
+  if (mobileMenuBtn && mobileMenu && mobileMenuIcon) {
+    mobileMenuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+      if (mobileMenu.classList.contains("hidden")) {
+        mobileMenuIcon.classList.remove("fa-times");
+        mobileMenuIcon.classList.add("fa-bars");
+      } else {
+        mobileMenuIcon.classList.remove("fa-bars");
+        mobileMenuIcon.classList.add("fa-times");
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.add("hidden");
+        mobileMenuIcon.classList.remove("fa-times");
+        mobileMenuIcon.classList.add("fa-bars");
+      }
+    });
+
+    // Close mobile menu when clicking on links
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+        mobileMenuIcon.classList.remove("fa-times");
+        mobileMenuIcon.classList.add("fa-bars");
+      });
+    });
+  }
+</script>

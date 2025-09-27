@@ -1,358 +1,1161 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un Membre - OpenDev Mada</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rejoindre OpenDev Madagascar</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/media/logo_opendev.jpg" />
+    <link rel="apple-touch-icon" href="assets/media/logo_opendev.jpg" />
+    <meta name="theme-color" content="#0ea5e9" />
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Theme Configuration -->
+
+    <!-- Suppression de l'avertissement CDN en développement -->
     <script>
-        tailwind.config = {
-            darkMode: ['class'],
-            theme: {
-                container: {
-                    center: true,
-                    padding: '2rem',
-                    screens: {
-                        '2xl': '1400px',
-                    },
-                },
-                extend: {
-                    colors: {
-                        background: '#ffffff',
-                        foreground: '#0A0047',
-                        primary: {
-                            DEFAULT: '#0A0047',
-                            foreground: '#ffffff',
-                        },
-                        border: '#0A0047',
-                        input: '#e6e6fa',
-                        ring: '#0A0047',
-                        muted: {
-                            DEFAULT: '#e6e6fa',
-                            foreground: '#4b4b7c',
-                        },
-                        accent: {
-                            DEFAULT: '#0A0047',
-                            foreground: '#ffffff',
-                        },
-                        card: {
-                            DEFAULT: '#ffffff',
-                            foreground: '#0A0047',
-                        },
-                    },
-                    borderRadius: {
-                        lg: '0.5rem',
-                        md: '0.375rem',
-                        sm: '0.25rem',
-                    },
-                },
+      // Supprimer l'avertissement CDN Tailwind en développement local
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        const originalWarn = console.warn;
+        console.warn = function (...args) {
+          if (
+            !args
+              .join(" ")
+              .includes("cdn.tailwindcss.com should not be used in production")
+          ) {
+            originalWarn.apply(console, args);
+          }
+        };
+      }
+    </script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
             },
-        }
+            colors: {
+              primary: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+              },
+            },
+            animation: {
+              "fade-in": "fadeIn 0.5s ease-in-out",
+              "slide-up": "slideUp 0.3s ease-out",
+              "bounce-gentle": "bounceGentle 2s ease-in-out infinite",
+            },
+            keyframes: {
+              bounceGentle: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-5px)" },
+              },
+            },
+          },
+        },
+      };
     </script>
-    <!-- Custom CSS -->
-    <link href="assets/css/add-member.css" rel="stylesheet">
-</head>
-<body class="min-h-screen bg-background font-sans antialiased text-foreground">
+  </head>
+  <body class="bg-gray-50 text-gray-900 antialiased">
     <!-- Navigation -->
-    <header class="nav-container">
-        <nav class="nav-content">
-            <a href="index.html" class="logo">
-                <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                    <span class="text-primary-foreground font-bold text-sm">OD</span>
-                </div>
-                <span>OpenDev Mada</span>
-            </a>
-            
-            <!-- Mobile menu button -->
-            <button class="md:hidden p-2 rounded-md text-foreground/60 hover:text-foreground focus:outline-none" id="mobile-menu-button">
-                <i class="fas fa-bars text-xl"></i>
+    <nav
+      class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200 z-50 shadow-sm dark:bg-gray-900/95 dark:border-gray-700"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg overflow-hidden dark:bg-gray-800"
+            >
+              <img
+                src="assets/media/logo_opendev.jpg"
+                alt="OpenDev Madagascar"
+                class="w-8 h-8 rounded-lg object-cover"
+              />
+            </div>
+            <div>
+              <h1 class="text-xl font-bold text-gray-900 dark:text-white">
+                OpenDev
+              </h1>
+              <p class="text-xs text-gray-500 dark:text-gray-400 -mt-1">
+                Madagascar
+              </p>
+            </div>
+          </div>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html"
+              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >Accueil</a
+            >
+            <a
+              href="members.html"
+              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >Développeurs</a
+            >
+            <a
+              href="add-member.html"
+              class="text-primary-600 dark:text-primary-400 font-semibold transition-colors hover:text-primary-700 dark:hover:text-primary-300"
+              >Inscription</a
+            >
+            <a
+              href="#contact"
+              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >Contact</a
+            >
+          </div>
+
+          <!-- Theme Toggle & CTA -->
+          <div class="hidden md:flex items-center space-x-4">
+            <button
+              id="theme-toggle"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              title="Changer de thème"
+            >
+              <i
+                id="theme-icon"
+                class="fas fa-sun text-gray-600 dark:text-gray-300"
+              ></i>
             </button>
-            
-            <!-- Desktop Navigation -->
-            <ul class="nav-links hidden md:flex">
-                <li><a href="index.html" class="nav-link">Accueil</a></li>
-                <li><a href="members.html" class="nav-link">Membres</a></li>
-                <li><a href="add-member.html" class="nav-link font-semibold text-primary">Ajouter</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            
-            <div class="hidden md:flex items-center gap-4">
-                <a href="#" class="text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none border border-input hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 rounded-md">
-                    Se connecter
-                </a>
-                <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                    S'inscrire
-                </a>
-            </div>
-        </nav>
-        
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-background border-t border-border">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="index.html" class="block px-4 py-2 text-foreground/90 hover:bg-accent rounded-md">Accueil</a>
-                <a href="members.html" class="block px-4 py-2 text-foreground/90 hover:bg-accent rounded-md">Membres</a>
-                <a href="add-member.html" class="block px-4 py-2 text-primary font-semibold bg-accent rounded-md">Ajouter</a>
-                <a href="#contact" class="block px-4 py-2 text-foreground/60 hover:bg-accent rounded-md">Contact</a>
-                <a href="#" class="block px-4 py-2 text-foreground/60 hover:bg-accent rounded-md">Se connecter</a>
-                <a href="#" class="block px-4 py-2 text-primary-foreground bg-primary hover:bg-primary/90 rounded-md text-center">S'inscrire</a>
-            </div>
+            <a
+              href="members.html"
+              class="text-primary-600 dark:text-primary-400 px-4 py-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200 font-medium"
+              >Voir la communauté</a
+            >
+          </div>
+
+          <!-- Mobile menu button -->
+          <div class="md:hidden flex items-center space-x-2">
+            <button
+              id="mobile-theme-toggle"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              title="Changer de thème"
+            >
+              <i
+                id="mobile-theme-icon"
+                class="fas fa-sun text-gray-600 dark:text-gray-300"
+              ></i>
+            </button>
+            <button
+              id="mobile-menu-btn"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <i
+                id="mobile-menu-icon"
+                class="fas fa-bars text-gray-600 dark:text-gray-300"
+              ></i>
+            </button>
+          </div>
         </div>
-        
-        <div class="team-note">
-            <i class="fas fa-user-plus mr-2"></i> Ajouter un nouveau membre à notre communauté
+
+        <!-- Mobile Navigation Menu -->
+        <div
+          id="mobile-menu"
+          class="md:hidden hidden border-t border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md"
+        >
+          <div class="px-2 pt-2 pb-3 space-y-1">
+            <a
+              href="index.html"
+              class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+              >Accueil</a
+            >
+            <a
+              href="members.html"
+              class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+              >Développeurs</a
+            >
+            <a
+              href="add-member.html"
+              class="block px-3 py-2 text-primary-600 dark:text-primary-400 font-semibold rounded-md"
+              >Inscription</a
+            >
+            <a
+              href="#contact"
+              class="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+              >Contact</a
+            >
+            <div
+              class="border-t border-gray-200 dark:border-gray-700 pt-3 mt-3"
+            >
+              <a
+                href="members.html"
+                class="block mx-3 px-4 py-2 bg-primary-600 text-white text-center rounded-lg hover:bg-primary-700 transition-colors font-medium"
+                >Voir la communauté</a
+              >
+            </div>
+          </div>
         </div>
-    </header>
+      </div>
+    </nav>
 
-    <main class="container mx-auto px-4 py-8 mt-20">
-        <form id="member-form" class="form-container bg-card rounded-lg shadow-sm border border-border p-6">
-            <div class="form-header text-center mb-8">
-                <h1 class="text-3xl md:text-4xl font-bold text-foreground">Ajouter un nouveau membre</h1>
-                <p class="text-muted-foreground mt-2">Remplissez le formulaire pour ajouter un nouveau membre à notre communauté de développeurs.</p>
-            </div>
-
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="firstName" class="block text-sm font-medium text-foreground mb-1 required">Prénom</label>
-                    <input type="text" id="firstName" name="firstName" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" required>
-                    <div class="error-message">Veuillez entrer un prénom valide</div>
-                </div>
-                <div class="form-group">
-                    <label for="lastName" class="block text-sm font-medium text-foreground mb-1 required">Nom</label>
-                    <input type="text" id="lastName" name="lastName" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" required>
-                    <div class="error-message">Veuillez entrer un nom valide</div>
-                </div>
-                <div class="form-group">
-                    <label for="role" class="block text-sm font-medium text-foreground mb-1 required">Rôle</label>
-                    <select id="role" name="role" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" required>
-                        <option value="">Sélectionnez un rôle</option>
-                        <option value="Développeur Full Stack">Développeur Full Stack</option>
-                        <option value="Développeur Frontend">Développeur Frontend</option>
-                        <option value="Développeur Backend">Développeur Backend</option>
-                        <option value="Designer UI/UX">Designer UI/UX</option>
-                        <option value="Chef de Projet">Chef de Projet</option>
-                    </select>
-                    <div class="error-message">Veuillez sélectionner un rôle</div>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="block text-sm font-medium text-foreground mb-1 required">Email</label>
-                    <input type="email" id="email" name="email" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" required>
-                    <div class="error-message">Veuillez entrer une adresse email valide</div>
-                </div>
-                <div class="form-group">
-                    <label for="phone" class="block text-sm font-medium text-foreground mb-1">Téléphone</label>
-                    <input type="tel" id="phone" name="phone" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                </div>
-                <div class="form-group full-width">
-                    <label for="bio" class="block text-sm font-medium text-foreground mb-1 required">Biographie</label>
-                    <textarea id="bio" name="bio" class="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-vertical" required></textarea>
-                    <div class="error-message">Veuillez entrer une biographie</div>
-                </div>
-                <div class="form-group full-width">
-                    <label for="skills" class="block text-sm font-medium text-foreground mb-1 required">Compétences (séparées par des virgules)</label>
-                    <input type="text" id="skills" name="skills" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="Ex: JavaScript, React, Node.js" required>
-                    <div class="error-message">Veuillez entrer au moins une compétence</div>
-                </div>
-
-                <!-- Champs requis côté backend -->
-                <div class="form-group">
-                    <label for="password" class="block text-sm font-medium text-foreground mb-1 required">Mot de passe (compte membre)</label>
-                    <input type="password" id="password" name="password" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" required>
-                    <div class="error-message">Veuillez entrer un mot de passe</div>
-                </div>
-                <div class="form-group">
-                    <label for="birthday" class="block text-sm font-medium text-foreground mb-1">Date de naissance</label>
-                    <input type="date" id="birthday" name="birthday" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                </div>
-                <div class="form-group">
-                    <label for="sexe" class="block text-sm font-medium text-foreground mb-1">Sexe</label>
-                    <select id="sexe" name="sexe" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                        <option value="">Non précisé</option>
-                        <option value="Male">Homme</option>
-                        <option value="Female">Femme</option>
-                        <option value="Other">Autre</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="address" class="block text-sm font-medium text-foreground mb-1">Adresse</label>
-                    <input type="text" id="address" name="address" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="Quartier, rue">
-                </div>
-                <div class="form-group">
-                    <label for="city" class="block text-sm font-medium text-foreground mb-1">Ville</label>
-                    <input type="text" id="city" name="city" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="Antananarivo">
-                </div>
-                <div class="form-group">
-                    <label for="contry" class="block text-sm font-medium text-foreground mb-1">Pays</label>
-                    <input type="text" id="contry" name="contry" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" placeholder="Madagascar">
-                </div>
-                <div class="form-group">
-                    <label for="statut" class="block text-sm font-medium text-foreground mb-1">Statut</label>
-                    <select id="statut" name="statut" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                        <option value="Actif" selected>Actif</option>
-                        <option value="Inactif">Inactif</option>
-                    </select>
-                </div>
-                <div class="form-group full-width">
-                    <label for="image" class="block text-sm font-medium text-foreground mb-1 required">Photo de profil</label>
-                    <input type="file" id="image" name="image" accept="image/*" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" required>
-                    <div class="error-message">Veuillez choisir une image</div>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <a href="members.html" class="btn btn-outline">Annuler</a>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save mr-2"></i> Enregistrer le membre
-                </button>
-            </div>
-        </form>
-    </main>
-
-    <footer class="bg-primary text-primary-foreground py-6 mt-12">
-        <div class="container text-center">
-            <p class="text-sm flex items-center justify-center gap-2">
-                <i class="fas fa-copyright"></i> 2025 - OpenDev Mada. Tous droits réservés.
-            </p>
+    <!-- Main Container -->
+    <div class="min-h-screen py-12 pt-24">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-12">
+          <div
+            class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-6 animate-bounce-gentle"
+          >
+            <i class="fas fa-user-plus text-2xl text-white"></i>
+          </div>
+          <h1 class="text-4xl font-bold text-gray-900 mb-4">
+            Rejoignez notre communauté
+          </h1>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Partagez vos compétences, découvrez de nouveaux projets et
+            connectez-vous avec les développeurs de Madagascar
+          </p>
         </div>
-    </footer>
 
-    <!-- Custom JavaScript -->
+        <!-- Form Container -->
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+          <!-- Progress Bar Mobile -->
+          <div class="md:hidden bg-gray-50 px-6 py-4">
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-primary-600 font-semibold"
+                >Étape <span id="current-step-mobile">1</span> sur 3</span
+              >
+              <span class="text-gray-500"
+                ><span id="progress-percentage">33</span>%</span
+              >
+            </div>
+            <div class="mt-2 bg-gray-200 rounded-full h-2">
+              <div
+                id="progress-bar"
+                class="bg-primary-600 h-2 rounded-full transition-all duration-300"
+                style="width: 33%"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Form -->
+          <form id="member-form" class="p-8">
+            <!-- Step 1: Basic Information -->
+            <div id="step-1" class="step">
+              <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                  Informations personnelles
+                </h2>
+                <p class="text-gray-600">
+                  Parlez-nous de vous et de votre parcours professionnel
+                </p>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <!-- Prénom -->
+                <div class="form-group">
+                  <label
+                    for="prenom"
+                    class="block text-sm font-semibold text-gray-700 mb-2"
+                  >
+                    Prénom <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="prenom"
+                    name="prenom"
+                    required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    placeholder="Votre prénom"
+                  />
+                  <div
+                    class="error-message hidden text-red-600 text-sm mt-1"
+                  ></div>
+                </div>
+
+                <!-- Nom -->
+                <div class="form-group">
+                  <label
+                    for="nom"
+                    class="block text-sm font-semibold text-gray-700 mb-2"
+                  >
+                    Nom <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="nom"
+                    name="nom"
+                    required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    placeholder="Votre nom"
+                  />
+                  <div
+                    class="error-message hidden text-red-600 text-sm mt-1"
+                  ></div>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <!-- Email -->
+                <div class="form-group">
+                  <label
+                    for="email"
+                    class="block text-sm font-semibold text-gray-700 mb-2"
+                  >
+                    Email <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    placeholder="votre@email.com"
+                  />
+                  <div
+                    class="error-message hidden text-red-600 text-sm mt-1"
+                  ></div>
+                </div>
+
+                <!-- Téléphone -->
+                <div class="form-group">
+                  <label
+                    for="telephone"
+                    class="block text-sm font-semibold text-gray-700 mb-2"
+                  >
+                    Téléphone
+                  </label>
+                  <input
+                    type="tel"
+                    id="telephone"
+                    name="telephone"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    placeholder="+261 34 12 345 67"
+                  />
+                  <div
+                    class="error-message hidden text-red-600 text-sm mt-1"
+                  ></div>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <!-- Ville -->
+                <div class="form-group">
+                  <label
+                    for="ville"
+                    class="block text-sm font-semibold text-gray-700 mb-2"
+                  >
+                    Ville <span class="text-red-500">*</span>
+                  </label>
+                  <select
+                    id="ville"
+                    name="ville"
+                    required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                  >
+                    <option value="">Sélectionnez votre ville</option>
+                    <option value="Antananarivo">Antananarivo</option>
+                    <option value="Toamasina">Toamasina</option>
+                    <option value="Antsirabe">Antsirabe</option>
+                    <option value="Fianarantsoa">Fianarantsoa</option>
+                    <option value="Mahajanga">Mahajanga</option>
+                    <option value="Toliara">Toliara</option>
+                    <option value="Antsiranana">Antsiranana</option>
+                    <option value="Autre">Autre</option>
+                  </select>
+                  <div
+                    class="error-message hidden text-red-600 text-sm mt-1"
+                  ></div>
+                </div>
+
+                <!-- Date de naissance -->
+                <div class="form-group">
+                  <label
+                    for="date_naissance"
+                    class="block text-sm font-semibold text-gray-700 mb-2"
+                  >
+                    Date de naissance
+                  </label>
+                  <input
+                    type="date"
+                    id="date_naissance"
+                    name="date_naissance"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                  />
+                  <div
+                    class="error-message hidden text-red-600 text-sm mt-1"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Poste -->
+              <div class="form-group mb-6">
+                <label
+                  for="poste"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                >
+                  Poste/Spécialité <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="poste"
+                  name="poste"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                  placeholder="ex: Développeur Full Stack, Designer UX/UI, Data Scientist..."
+                />
+                <div
+                  class="error-message hidden text-red-600 text-sm mt-1"
+                ></div>
+              </div>
+
+              <!-- Bio -->
+              <div class="form-group mb-8">
+                <label
+                  for="bio"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                >
+                  Présentation <span class="text-red-500">*</span>
+                </label>
+                <textarea
+                  id="bio"
+                  name="bio"
+                  rows="4"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
+                  placeholder="Présentez-vous brièvement : votre expérience, vos passions, vos projets..."
+                ></textarea>
+                <div
+                  class="error-message hidden text-red-600 text-sm mt-1"
+                ></div>
+                <div class="text-sm text-gray-500 mt-1">
+                  <span id="bio-count">0</span>/500 caractères
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Skills & Experience -->
+            <div id="step-2" class="step hidden">
+              <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                  Compétences et expérience
+                </h2>
+                <p class="text-gray-600">
+                  Partagez vos compétences techniques et votre niveau
+                  d'expérience
+                </p>
+              </div>
+
+              <!-- Niveau d'expérience -->
+              <div class="form-group mb-6">
+                <label class="block text-sm font-semibold text-gray-700 mb-4">
+                  Niveau d'expérience <span class="text-red-500">*</span>
+                </label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <label class="experience-option cursor-pointer">
+                    <input
+                      type="radio"
+                      name="experience"
+                      value="Débutant"
+                      class="hidden"
+                    />
+                    <div
+                      class="p-4 border-2 border-gray-200 rounded-xl text-center hover:border-primary-300 transition-all"
+                    >
+                      <i
+                        class="fas fa-seedling text-2xl text-gray-400 mb-2"
+                      ></i>
+                      <div class="font-semibold text-gray-700">Débutant</div>
+                      <div class="text-xs text-gray-500">0-1 an</div>
+                    </div>
+                  </label>
+                  <label class="experience-option cursor-pointer">
+                    <input
+                      type="radio"
+                      name="experience"
+                      value="Junior"
+                      class="hidden"
+                    />
+                    <div
+                      class="p-4 border-2 border-gray-200 rounded-xl text-center hover:border-primary-300 transition-all"
+                    >
+                      <i class="fas fa-leaf text-2xl text-gray-400 mb-2"></i>
+                      <div class="font-semibold text-gray-700">Junior</div>
+                      <div class="text-xs text-gray-500">1-3 ans</div>
+                    </div>
+                  </label>
+                  <label class="experience-option cursor-pointer">
+                    <input
+                      type="radio"
+                      name="experience"
+                      value="Senior"
+                      class="hidden"
+                    />
+                    <div
+                      class="p-4 border-2 border-gray-200 rounded-xl text-center hover:border-primary-300 transition-all"
+                    >
+                      <i class="fas fa-tree text-2xl text-gray-400 mb-2"></i>
+                      <div class="font-semibold text-gray-700">Senior</div>
+                      <div class="text-xs text-gray-500">3-7 ans</div>
+                    </div>
+                  </label>
+                  <label class="experience-option cursor-pointer">
+                    <input
+                      type="radio"
+                      name="experience"
+                      value="Expert"
+                      class="hidden"
+                    />
+                    <div
+                      class="p-4 border-2 border-gray-200 rounded-xl text-center hover:border-primary-300 transition-all"
+                    >
+                      <i class="fas fa-crown text-2xl text-gray-400 mb-2"></i>
+                      <div class="font-semibold text-gray-700">Expert</div>
+                      <div class="text-xs text-gray-500">7+ ans</div>
+                    </div>
+                  </label>
+                </div>
+                <div
+                  class="error-message hidden text-red-600 text-sm mt-2"
+                ></div>
+              </div>
+
+              <!-- Compétences -->
+              <div class="form-group mb-8">
+                <label
+                  for="competences-input"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                >
+                  Compétences techniques <span class="text-red-500">*</span>
+                </label>
+                <p class="text-sm text-gray-600 mb-4">
+                  Ajoutez vos compétences une par une (langages, frameworks,
+                  outils...)
+                </p>
+
+                <div class="flex gap-2 mb-4">
+                  <input
+                    type="text"
+                    id="competences-input"
+                    class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    placeholder="ex: JavaScript, Python, React..."
+                  />
+                  <button
+                    type="button"
+                    id="add-skill-btn"
+                    class="px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+
+                <!-- Skills suggestions -->
+                <div class="mb-4">
+                  <p class="text-sm text-gray-600 mb-2">
+                    Suggestions populaires :
+                  </p>
+                  <div class="flex flex-wrap gap-2" id="skill-suggestions">
+                    <button
+                      type="button"
+                      class="skill-suggestion px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary-100 hover:text-primary-700 transition-colors"
+                    >
+                      JavaScript
+                    </button>
+                    <button
+                      type="button"
+                      class="skill-suggestion px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary-100 hover:text-primary-700 transition-colors"
+                    >
+                      Python
+                    </button>
+                    <button
+                      type="button"
+                      class="skill-suggestion px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary-100 hover:text-primary-700 transition-colors"
+                    >
+                      React
+                    </button>
+                    <button
+                      type="button"
+                      class="skill-suggestion px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary-100 hover:text-primary-700 transition-colors"
+                    >
+                      Node.js
+                    </button>
+                    <button
+                      type="button"
+                      class="skill-suggestion px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary-100 hover:text-primary-700 transition-colors"
+                    >
+                      PHP
+                    </button>
+                    <button
+                      type="button"
+                      class="skill-suggestion px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary-100 hover:text-primary-700 transition-colors"
+                    >
+                      Java
+                    </button>
+                    <button
+                      type="button"
+                      class="skill-suggestion px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary-100 hover:text-primary-700 transition-colors"
+                    >
+                      C#
+                    </button>
+                    <button
+                      type="button"
+                      class="skill-suggestion px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary-100 hover:text-primary-700 transition-colors"
+                    >
+                      Flutter
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Selected skills -->
+                <div id="selected-skills" class="flex flex-wrap gap-2 mb-4">
+                  <!-- Skills will be added here -->
+                </div>
+                <div class="error-message hidden text-red-600 text-sm"></div>
+              </div>
+            </div>
+
+            <!-- Step 3: Finalization -->
+            <div id="step-3" class="step hidden">
+              <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                  Finalisation
+                </h2>
+                <p class="text-gray-600">
+                  Vérifiez vos informations et rejoignez notre communauté
+                </p>
+              </div>
+
+              <!-- Photo de profil -->
+              <div class="form-group mb-6">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Photo de profil (optionnel)
+                </label>
+                <div class="flex items-center space-x-6">
+                  <div
+                    class="w-24 h-24 bg-gray-100 rounded-2xl flex items-center justify-center overflow-hidden"
+                  >
+                    <img
+                      id="profile-preview"
+                      src=""
+                      alt=""
+                      class="w-full h-full object-cover hidden"
+                    />
+                    <i
+                      class="fas fa-user text-3xl text-gray-400"
+                      id="profile-placeholder"
+                    ></i>
+                  </div>
+                  <div>
+                    <input
+                      type="file"
+                      id="photo_profil"
+                      name="photo_profil"
+                      accept="image/*"
+                      class="hidden"
+                    />
+                    <label
+                      for="photo_profil"
+                      class="cursor-pointer inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      <i class="fas fa-camera mr-2 text-gray-600"></i>
+                      Choisir une photo
+                    </label>
+                    <p class="text-sm text-gray-500 mt-1">
+                      JPG, PNG jusqu'à 5MB
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Récapitulatif -->
+              <div class="bg-gray-50 rounded-2xl p-6 mb-8">
+                <h3 class="font-semibold text-gray-900 mb-4">
+                  Récapitulatif de votre profil
+                </h3>
+                <div id="profile-summary" class="space-y-2 text-sm">
+                  <!-- Sera rempli dynamiquement -->
+                </div>
+              </div>
+
+              <!-- Conditions -->
+              <div class="form-group mb-8">
+                <label class="flex items-start space-x-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    name="terms"
+                    required
+                    class="mt-1 w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
+                  />
+                  <span class="text-sm text-gray-700">
+                    J'accepte les
+                    <a href="#" class="text-primary-600 hover:underline"
+                      >conditions d'utilisation</a
+                    >
+                    et la
+                    <a href="#" class="text-primary-600 hover:underline"
+                      >politique de confidentialité</a
+                    >
+                    d'OpenDev Madagascar
+                  </span>
+                </label>
+                <div
+                  class="error-message hidden text-red-600 text-sm mt-1"
+                ></div>
+              </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div
+              class="flex items-center justify-between pt-8 border-t border-gray-200"
+            >
+              <button
+                type="button"
+                id="prev-btn"
+                class="hidden px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+              >
+                <i class="fas fa-arrow-left mr-2"></i>
+                Précédent
+              </button>
+              <div class="flex-1"></div>
+              <button
+                type="button"
+                id="next-btn"
+                class="px-8 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-semibold"
+              >
+                Suivant
+                <i class="fas fa-arrow-right ml-2"></i>
+              </button>
+              <button
+                type="submit"
+                id="submit-btn"
+                class="hidden px-8 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors font-semibold"
+              >
+                <i class="fas fa-check mr-2"></i>
+                Rejoindre la communauté
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div
+      id="success-modal"
+      class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    >
+      <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center">
+        <div
+          class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-6"
+        >
+          <i class="fas fa-check text-2xl text-green-600"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">
+          Bienvenue dans la communauté !
+        </h3>
+        <p class="text-gray-600 mb-6">
+          Votre profil a été créé avec succès. Vous allez recevoir un email de
+          confirmation.
+        </p>
+        <div class="space-y-3">
+          <a
+            href="members.html"
+            class="block w-full px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors"
+          >
+            Découvrir les développeurs
+          </a>
+          <a
+            href="index.html"
+            class="block w-full px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+          >
+            Retour à l'accueil
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/theme-manager.js"></script>
+    <script src="assets/js/api.js"></script>
     <script>
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById("mobile-menu-button");
-        const mobileMenu = document.getElementById("mobile-menu");
-        
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                const isHidden = mobileMenu.classList.toggle('hidden');
-                const icon = mobileMenuButton.querySelector('i');
-                
-                if (!isHidden) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
-            
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                    const icon = mobileMenuButton.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                });
-            });
+      let currentStep = 1;
+      const totalSteps = 3;
+      let selectedSkills = [];
+
+      // Initialisation
+      document.addEventListener("DOMContentLoaded", () => {
+        setupFormValidation();
+        setupStepNavigation();
+        setupSkillsManagement();
+        setupFileUpload();
+      });
+
+      // Configuration de la validation du formulaire
+      function setupFormValidation() {
+        const form = document.getElementById("member-form");
+        const inputs = form.querySelectorAll("input, textarea, select");
+
+        inputs.forEach((input) => {
+          input.addEventListener("blur", () => validateField(input));
+          input.addEventListener("input", () => clearFieldError(input));
+        });
+
+        // Compteur de caractères pour la bio
+        const bioField = document.getElementById("bio");
+        const bioCount = document.getElementById("bio-count");
+        bioField.addEventListener("input", () => {
+          const count = bioField.value.length;
+          bioCount.textContent = count;
+          bioCount.className = count > 500 ? "text-red-500" : "text-gray-500";
+        });
+
+        // Validation du formulaire
+        form.addEventListener("submit", handleFormSubmit);
+      }
+
+      // Configuration de la navigation des étapes
+      function setupStepNavigation() {
+        const nextBtn = document.getElementById("next-btn");
+        const prevBtn = document.getElementById("prev-btn");
+
+        nextBtn.addEventListener("click", () => {
+          if (validateCurrentStep()) {
+            if (currentStep < totalSteps) {
+              currentStep++;
+              updateStep();
+            }
+          }
+        });
+
+        prevBtn.addEventListener("click", () => {
+          if (currentStep > 1) {
+            currentStep--;
+            updateStep();
+          }
+        });
+
+        // Sélection de l'expérience
+        document.querySelectorAll(".experience-option").forEach((option) => {
+          option.addEventListener("click", () => {
+            document
+              .querySelectorAll(".experience-option div")
+              .forEach((div) => {
+                div.classList.remove("border-primary-500", "bg-primary-50");
+                div.classList.add("border-gray-200");
+              });
+            option
+              .querySelector("div")
+              .classList.add("border-primary-500", "bg-primary-50");
+            option.querySelector("div").classList.remove("border-gray-200");
+            option.querySelector("input").checked = true;
+          });
+        });
+      }
+
+      // Configuration de la gestion des compétences
+      function setupSkillsManagement() {
+        const skillInput = document.getElementById("competences-input");
+        const addBtn = document.getElementById("add-skill-btn");
+        const skillsContainer = document.getElementById("selected-skills");
+
+        addBtn.addEventListener("click", () =>
+          addSkill(skillInput.value.trim())
+        );
+        skillInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            addSkill(skillInput.value.trim());
+          }
+        });
+
+        // Suggestions de compétences
+        document.querySelectorAll(".skill-suggestion").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            addSkill(btn.textContent);
+          });
+        });
+      }
+
+      // Configuration de l'upload de fichier
+      function setupFileUpload() {
+        const fileInput = document.getElementById("photo_profil");
+        const preview = document.getElementById("profile-preview");
+        const placeholder = document.getElementById("profile-placeholder");
+
+        fileInput.addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              preview.src = e.target.result;
+              preview.classList.remove("hidden");
+              placeholder.classList.add("hidden");
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
+      // Ajouter une compétence
+      function addSkill(skill) {
+        if (!skill || selectedSkills.includes(skill)) return;
+
+        selectedSkills.push(skill);
+        updateSkillsDisplay();
+        document.getElementById("competences-input").value = "";
+      }
+
+      // Supprimer une compétence
+      function removeSkill(skill) {
+        selectedSkills = selectedSkills.filter((s) => s !== skill);
+        updateSkillsDisplay();
+      }
+
+      // Mettre à jour l'affichage des compétences
+      function updateSkillsDisplay() {
+        const container = document.getElementById("selected-skills");
+        container.innerHTML = selectedSkills
+          .map(
+            (skill) => `
+                <span class="inline-flex items-center px-3 py-1 bg-primary-100 text-primary-800 rounded-full text-sm">
+                    ${skill}
+                    <button type="button" onclick="removeSkill('${skill}')" class="ml-2 hover:text-primary-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </span>
+            `
+          )
+          .join("");
+      }
+
+      // Mettre à jour l'étape
+      function updateStep() {
+        // Masquer toutes les étapes
+        document
+          .querySelectorAll(".step")
+          .forEach((step) => step.classList.add("hidden"));
+
+        // Afficher l'étape actuelle
+        document
+          .getElementById(`step-${currentStep}`)
+          .classList.remove("hidden");
+
+        // Mettre à jour les boutons
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+        const submitBtn = document.getElementById("submit-btn");
+
+        prevBtn.classList.toggle("hidden", currentStep === 1);
+        nextBtn.classList.toggle("hidden", currentStep === totalSteps);
+        submitBtn.classList.toggle("hidden", currentStep !== totalSteps);
+
+        // Mettre à jour la barre de progression
+        const progress = (currentStep / totalSteps) * 100;
+        document.getElementById("progress-bar").style.width = `${progress}%`;
+        document.getElementById("current-step-mobile").textContent =
+          currentStep;
+        document.getElementById("progress-percentage").textContent =
+          Math.round(progress);
+
+        // Mettre à jour la progression desktop
+        for (let i = 1; i <= totalSteps; i++) {
+          const stepElements = document.querySelectorAll(
+            `nav .flex:nth-child(${i * 2 - 1})`
+          );
+          stepElements.forEach((el) => {
+            const circle = el.querySelector(".w-8");
+            const text = el.querySelector("span");
+
+            if (i <= currentStep) {
+              circle.classList.remove("bg-gray-300", "text-gray-600");
+              circle.classList.add("bg-primary-600", "text-white");
+              text.classList.remove("text-gray-400");
+              text.classList.add("text-gray-600");
+            } else {
+              circle.classList.add("bg-gray-300", "text-gray-600");
+              circle.classList.remove("bg-primary-600", "text-white");
+              text.classList.add("text-gray-400");
+              text.classList.remove("text-gray-600");
+            }
+          });
         }
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-            anchor.addEventListener("click", function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute("href");
-                if (targetId === "#") return;
+        // Mettre à jour le récapitulatif si on est à l'étape 3
+        if (currentStep === 3) {
+          updateProfileSummary();
+        }
+      }
 
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const headerOffset = 100;
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      // Valider l'étape actuelle
+      function validateCurrentStep() {
+        const currentStepElement = document.getElementById(
+          `step-${currentStep}`
+        );
+        const requiredFields =
+          currentStepElement.querySelectorAll("[required]");
+        let isValid = true;
 
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth",
-                    });
-                }
-            });
+        requiredFields.forEach((field) => {
+          if (!validateField(field)) {
+            isValid = false;
+          }
         });
 
-        // Form validation
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('member-form');
-            const formGroups = document.querySelectorAll('.form-group');
-            
-            // Add loading animation
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
+        // Validation spéciale pour les compétences
+        if (currentStep === 2 && selectedSkills.length === 0) {
+          showFieldError(
+            document.getElementById("selected-skills").parentNode,
+            "Veuillez ajouter au moins une compétence"
+          );
+          isValid = false;
+        }
 
-            // Form validation
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                let isValid = true;
+        return isValid;
+      }
 
-                // Reset all error states
-                formGroups.forEach(group => {
-                    group.classList.remove('error');
-                    const errorMsg = group.querySelector('.error-message');
-                    if (errorMsg) errorMsg.style.display = 'none';
-                });
+      // Valider un champ
+      function validateField(field) {
+        const fieldGroup = field.closest(".form-group");
+        let isValid = true;
+        let errorMessage = "";
 
-                // Validate required fields
-                const requiredFields = form.querySelectorAll('[required]');
-                requiredFields.forEach(field => {
-                    if (!field.value.trim()) {
-                        const formGroup = field.closest('.form-group');
-                        formGroup.classList.add('error');
-                        const errorMsg = formGroup.querySelector('.error-message');
-                        if (errorMsg) errorMsg.style.display = 'block';
-                        isValid = false;
-                    }
-                });
+        // Vérification des champs requis
+        if (field.hasAttribute("required") && !field.value.trim()) {
+          errorMessage = "Ce champ est obligatoire";
+          isValid = false;
+        }
+        // Validation email
+        else if (field.type === "email" && field.value) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(field.value)) {
+            errorMessage = "Adresse email invalide";
+            isValid = false;
+          }
+        }
+        // Validation téléphone
+        else if (field.type === "tel" && field.value) {
+          const phoneRegex = /^[\+]?[0-9\s\-\(\)]{8,}$/;
+          if (!phoneRegex.test(field.value)) {
+            errorMessage = "Numéro de téléphone invalide";
+            isValid = false;
+          }
+        }
+        // Validation bio
+        else if (field.id === "bio" && field.value.length > 500) {
+          errorMessage = "La présentation ne peut pas dépasser 500 caractères";
+          isValid = false;
+        }
 
-                // Validate email format
-                const emailField = form.querySelector('input[type="email"]');
-                if (emailField && emailField.value) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(emailField.value)) {
-                        const formGroup = emailField.closest('.form-group');
-                        formGroup.classList.add('error');
-                        const errorMsg = formGroup.querySelector('.error-message') || document.createElement('div');
-                        errorMsg.className = 'error-message';
-                        errorMsg.textContent = 'Veuillez entrer une adresse email valide';
-                        if (!formGroup.querySelector('.error-message')) {
-                            formGroup.appendChild(errorMsg);
-                        }
-                        isValid = false;
-                    }
-                }
+        if (isValid) {
+          clearFieldError(field);
+        } else {
+          showFieldError(fieldGroup || field.parentNode, errorMessage);
+        }
 
-                if (isValid) {
-                    alert('Formulaire soumis avec succès !');
-                    // form.submit(); // Uncomment to enable form submission
-                } else {
-                    const firstError = form.querySelector('.error');
-                    if (firstError) {
-                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                }
-            });
+        return isValid;
+      }
 
-            // Real-time validation
-            form.addEventListener('input', function(e) {
-                const input = e.target;
-                const formGroup = input.closest('.form-group');
-                if (!formGroup) return;
+      // Afficher une erreur de champ
+      function showFieldError(container, message) {
+        const errorElement = container.querySelector(".error-message");
+        if (errorElement) {
+          errorElement.textContent = message;
+          errorElement.classList.remove("hidden");
+        }
+      }
 
-                if (input.value.trim()) {
-                    formGroup.classList.remove('error');
-                    const errorMsg = formGroup.querySelector('.error-message');
-                    if (errorMsg) errorMsg.style.display = 'none';
-                }
-            });
-        });
+      // Effacer l'erreur d'un champ
+      function clearFieldError(field) {
+        const fieldGroup = field.closest(".form-group");
+        const errorElement = (fieldGroup || field.parentNode).querySelector(
+          ".error-message"
+        );
+        if (errorElement) {
+          errorElement.classList.add("hidden");
+        }
+      }
+
+      // Mettre à jour le récapitulatif
+      function updateProfileSummary() {
+        const summary = document.getElementById("profile-summary");
+        const formData = new FormData(document.getElementById("member-form"));
+
+        const prenom = formData.get("prenom");
+        const nom = formData.get("nom");
+        const email = formData.get("email");
+        const ville = formData.get("ville");
+        const poste = formData.get("poste");
+        const experience = formData.get("experience");
+
+        summary.innerHTML = `
+                <div><strong>Nom :</strong> ${prenom} ${nom}</div>
+                <div><strong>Email :</strong> ${email}</div>
+                <div><strong>Ville :</strong> ${ville}</div>
+                <div><strong>Poste :</strong> ${poste}</div>
+                <div><strong>Expérience :</strong> ${experience}</div>
+                <div><strong>Compétences :</strong> ${selectedSkills.join(
+                  ", "
+                )}</div>
+            `;
+      }
+
+      // Gérer la soumission du formulaire
+      async function handleFormSubmit(e) {
+        e.preventDefault();
+
+        if (!validateCurrentStep()) return;
+
+        const submitBtn = document.getElementById("submit-btn");
+        const originalContent = submitBtn.innerHTML;
+
+        // État de chargement
+        submitBtn.disabled = true;
+        submitBtn.innerHTML =
+          '<i class="fas fa-spinner fa-spin mr-2"></i>Inscription en cours...';
+
+        try {
+          // Simuler l'envoi (remplacer par votre API)
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+
+          // Afficher le modal de succès
+          document.getElementById("success-modal").classList.remove("hidden");
+        } catch (error) {
+          console.error("Erreur lors de l'inscription:", error);
+          alert("Erreur lors de l'inscription. Veuillez réessayer.");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalContent;
+        }
+      }
+
+      // Rendre removeSkill globale
+      window.removeSkill = removeSkill;
     </script>
-    <!-- Scripts d'intégration API backend -->
-    <script src="assets/js/api.js"></script>
-    <script src="assets/js/app-add-member.js"></script>
-</body>
+
+    <!-- Script de tests backend pour le formulaire -->
+    <script src="assets/js/backend-tests.js"></script>
+  </body>
 </html>

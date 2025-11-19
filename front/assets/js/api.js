@@ -10,12 +10,12 @@ const isDevelopment = window.location.hostname === '127.0.0.1' ||
 const BACKEND_CONFIG = {
   // URL de l'API backend principale
   API_BASE: isDevelopment 
-    ? 'http://localhost:8000/api/opendevmada'  // Backend local (PHP/Laravel ou Node.js)
-    : 'https://opendevmadaannuaire.infinityfree.me/api/opendevmada',  // Production
+    ? 'http://localhost:3000/api/opendevmada'  
+    : 'https://opendevmadaannuaire.infinityfree.me/api/opendevmada',  
 
   // URL des images/fichiers statiques
   IMG_BASE: isDevelopment
-    ? 'http://localhost:8000/public/'  // Serveur local pour les images
+    ? 'http://localhost:3000/public/'  
     : 'https://opendevmadaannuaire.infinityfree.me/public/',
 
   // Configuration des en-têtes pour les requêtes

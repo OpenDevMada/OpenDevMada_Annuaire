@@ -351,6 +351,7 @@
                     type="tel"
                     id="telephone"
                     name="telephone"
+                    required
                     class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                     placeholder="+261 34 12 345 67"
                   />
@@ -988,6 +989,7 @@
           stepElements.forEach((el) => {
             const circle = el.querySelector(".w-8");
             const text = el.querySelector("span");
+            if (!circle || !text) return;
 
             if (i <= currentStep) {
               circle.classList.remove("bg-gray-300", "text-gray-600");
@@ -1137,11 +1139,43 @@
           '<i class="fas fa-spinner fa-spin mr-2"></i>Inscription en cours...';
 
         try {
-          // Simuler l'envoi (remplacer par votre API)
-          await new Promise((resolve) => setTimeout(resolve, 2000));
+          const form = document.getElementById("member-form");
+          const raw = new FormData(form);
+          const fd = new FormData();
 
-          // Afficher le modal de succès
+          // Champs requis/backend
+          fd.append('nom', raw.get('nom') || '');
+          fd.append('prenom', raw.get('prenom') || '');
+          fd.append('email', raw.get('email') || '');
+          fd.append('phone', raw.get('telephone') || '');
+          fd.append('city', raw.get('ville') || '');
+          fd.append('address', raw.get('ville') || '');
+          fd.append('date_naissance', raw.get('date_naissance') || '');
+          fd.append('poste', raw.get('poste') || '');
+          fd.append('experience', raw.get('experience') || '');
+          fd.append('bio', raw.get('bio') || '');
+          fd.append('role', 'membre');
+          fd.append('statut', 'active');
+          fd.append('sexe', raw.get('sexe') || 'Male');
+          fd.append('contry', 'Madagascar');
+
+          // Compétences
+          (selectedSkills || []).forEach(s => fd.append('competences[]', s));
+
+          // Image
+          const file = document.getElementById('photo_profil').files[0];
+          if (file) {
+            fd.append('photo_profil', file, file.name);
+          }
+
+          const { ok, data } = await window.ODMApi.createMember(fd);
+          if (!ok || !data || data.status !== 'success') {
+            throw new Error(data?.message || 'Erreur API');
+          }
+
+          // Succès
           document.getElementById("success-modal").classList.remove("hidden");
+          setTimeout(() => { window.location.href = 'members.html' }, 800);
         } catch (error) {
           console.error("Erreur lors de l'inscription:", error);
           alert("Erreur lors de l'inscription. Veuillez réessayer.");
@@ -1155,7 +1189,6 @@
       window.removeSkill = removeSkill;
     </script>
 
-    <!-- Script de tests backend pour le formulaire -->
-    <script src="assets/js/backend-tests.js"></script>
+    
   </body>
 </html>

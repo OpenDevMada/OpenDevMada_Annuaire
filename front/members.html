@@ -533,11 +533,13 @@
                     <div class="flex items-start justify-between mb-4">
                         <div class="flex items-center space-x-3">
                             <div class="relative">
-                                <img src="${window.ODMApi.imageUrl(
-                                  member.photo_profil
-                                )}" 
+                                <img src="${window.ODMApi.imageUrl(member.photo_profil)}" 
                                      alt="${member.prenom} ${member.nom}"
-                                     class="w-12 h-12 rounded-xl object-cover ring-2 ring-primary-100">
+                                     class="w-12 h-12 rounded-xl object-cover ring-2 ring-primary-100"
+                                     referrerpolicy="no-referrer"
+                                     loading="lazy"
+                                     decoding="async"
+                                     onerror="this.onerror=null;this.src='https://via.placeholder.com/200x200?text=OpenDev'">
                                 <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
                             </div>
                             <div>

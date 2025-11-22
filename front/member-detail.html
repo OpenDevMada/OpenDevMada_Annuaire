@@ -224,7 +224,11 @@
                             <img id="member-avatar" 
                                  src="" 
                                  alt="" 
-                                 class="w-32 h-32 rounded-3xl object-cover border-4 border-white/20 shadow-xl">
+                                 class="w-32 h-32 rounded-3xl object-cover border-4 border-white/20 shadow-xl"
+                                 referrerpolicy="no-referrer"
+                                 loading="lazy"
+                                 decoding="async"
+                                 onerror="this.onerror=null;this.src='https://via.placeholder.com/200x200?text=OpenDev'">
                             <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-green-400 rounded-full border-4 border-white shadow-lg"></div>
                         </div>
                         
@@ -260,6 +264,15 @@
                             <button id="contact-linkedin" class="flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all">
                                 <i class="fab fa-linkedin mr-2"></i>
                                 <span>LinkedIn</span>
+                            </button>
+                        </div>
+
+                        <div class="mt-4 flex gap-3 justify-center lg:justify-start">
+                            <button id="edit-bio-btn" class="px-4 py-2 bg-yellow-400/20 text-white rounded-lg hover:bg-yellow-400/30 transition-all">
+                                <i class="fas fa-edit mr-2"></i>Modifier la bio
+                            </button>
+                            <button id="delete-member-btn" class="px-4 py-2 bg-red-500/20 text-white rounded-lg hover:bg-red-500/30 transition-all">
+                                <i class="fas fa-trash mr-2"></i>Supprimer
                             </button>
                         </div>
 
@@ -440,6 +453,46 @@
             
             if (memberId) {
                 await loadMemberProfile(memberId);
+                // Actions CRUD
+                const editBtn = document.getElementById('edit-bio-btn');
+                if (editBtn) {
+                    editBtn.addEventListener('click', async () => {
+                        const newBio = prompt('Nouvelle bio', currentMember?.bio || '');
+                        if (newBio == null) return;
+                        try {
+                            const fd = new FormData();
+                            fd.append('bio', newBio);
+                            const { ok, data } = await window.ODMApi.updateMember(currentMember.id, fd);
+                            if (ok && data && (data.status === 'success' || data.status === 'Succès')) {
+                                currentMember.bio = newBio;
+                                document.getElementById('member-bio').textContent = newBio;
+                                alert('Profil mis à jour');
+                            } else {
+                                alert('Échec de la mise à jour');
+                            }
+                        } catch (e) {
+                            alert('Erreur lors de la mise à jour');
+                        }
+                    });
+                }
+
+                const delBtn = document.getElementById('delete-member-btn');
+                if (delBtn) {
+                    delBtn.addEventListener('click', async () => {
+                        if (!confirm('Supprimer ce membre ?')) return;
+                        try {
+                            const { ok, data } = await window.ODMApi.deleteMember(currentMember.id);
+                            if (ok && data && (data.status === 'success' || data.status === 'Succès')) {
+                                alert('Membre supprimé');
+                                window.location.href = 'members.html';
+                            } else {
+                                alert('Échec de la suppression');
+                            }
+                        } catch (e) {
+                            alert('Erreur lors de la suppression');
+                        }
+                    });
+                }
             } else {
                 showError('ID de membre manquant');
             }
@@ -580,10 +633,14 @@
 
                 container.innerHTML = similar.map(member => `
                     <div class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors"
-                         onclick="window.location.href='member-detail-modern.html?id=${member.id}'">
+                         onclick="window.location.href='member-detail.html?id=${member.id}'">
                         <img src="${window.ODMApi.imageUrl(member.photo_profil)}" 
                              alt="${member.prenom} ${member.nom}"
-                             class="w-10 h-10 rounded-lg object-cover">
+                             class="w-10 h-10 rounded-lg object-cover"
+                             referrerpolicy="no-referrer"
+                             loading="lazy"
+                             decoding="async"
+                             onerror="this.onerror=null;this.src='https://via.placeholder.com/200x200?text=OpenDev'">
                         <div class="flex-1 min-w-0">
                             <p class="font-medium text-gray-900 truncate">${member.prenom} ${member.nom}</p>
                             <p class="text-sm text-gray-500 truncate">${member.poste || 'Développeur'}</p>
